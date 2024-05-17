@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cristianluna.controller.MenuClientesController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="740.0" layoutX="-10.0">
+         <image>
+            <Image url="@../images/FondoClienteView.png" />
+         </image>
+      </ImageView>
+      <GridPane layoutX="5.0" layoutY="92.0" prefHeight="235.0" prefWidth="150.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="107.0" minWidth="0.0" prefWidth="0.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+          <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="59.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="4.0" prefHeight="60.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="btnAgregarCliente" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#agregar" prefHeight="48.0" prefWidth="149.0" stylesheets="@../resource/BodeguitaCSS.css" text="Agregar" GridPane.rowIndex="1">
+               <styleClass>
+                  <String fx:value="button2" />
+                  <String fx:value="button3" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnEditarCliente" mnemonicParsing="false" onAction="#editar" prefHeight="48.0" prefWidth="498.0" stylesheets="@../resource/BodeguitaCSS.css" text="Editar" GridPane.rowIndex="2">
+               <styleClass>
+                  <String fx:value="button2" />
+                  <String fx:value="button3" />
+               </styleClass></Button>
+            <Button fx:id="btnEliminarCliente" mnemonicParsing="false" onAction="#eliminar" prefHeight="48.0" prefWidth="498.0" stylesheets="@../resource/BodeguitaCSS.css" text="Eliminar" GridPane.rowIndex="3">
+               <styleClass>
+                  <String fx:value="button2" />
+                  <String fx:value="button3" />
+               </styleClass></Button>
+            <Button fx:id="btnReportesCliente" mnemonicParsing="false" onAction="#reporte" prefHeight="48.0" prefWidth="498.0" stylesheets="@../resource/BodeguitaCSS.css" text="Reportes" GridPane.rowIndex="4">
+               <styleClass>
+                  <String fx:value="button2" />
+                  <String fx:value="button3" />
+               </styleClass></Button>
+            <ImageView fx:id="imgReportes" fitHeight="42.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@../images/IconReportesCliente.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgEditar" fitHeight="42.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../images/IconEditarCliente.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgEliminar" fitHeight="39.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@../images/IconEliminarCliente.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgAgregar" fitHeight="38.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/IconAgregarCliente.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+      <GridPane layoutX="165.0" layoutY="44.0" prefHeight="95.0" prefWidth="461.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="91.0" minWidth="10.0" prefWidth="74.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="84.0" minWidth="10.0" prefWidth="81.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="78.0" minWidth="10.0" prefWidth="31.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="70.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="76.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="84.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Codigo Cliente" />
+            <Label text=" NIT" GridPane.columnIndex="2" />
+            <Label text=" Nombre" GridPane.columnIndex="4" />
+            <Label text=" Apellido" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <Label text="Direccion" GridPane.rowIndex="2" />
+            <TextField fx:id="txtCodigoC" GridPane.columnIndex="1" />
+            <TextField fx:id="txtNombreC" prefHeight="25.0" prefWidth="104.0" GridPane.columnIndex="5" />
+            <TextField fx:id="txtDireccionC" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtNIT" prefHeight="25.0" prefWidth="69.0" GridPane.columnIndex="3" />
+            <TextField fx:id="txtApellidoC" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <TextField fx:id="txtTelefonoC" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Telefono" GridPane.rowIndex="1" />
+            <Label text="Correo" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <TextField fx:id="txtCorreoC" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <TableView fx:id="tblClientes" layoutX="165.0" layoutY="149.0" onMouseClicked="#seleccionarElemento" prefHeight="235.0" prefWidth="536.0">
+        <columns>
+          <TableColumn fx:id="colCodigoC" prefWidth="75.0" text="CodigoCliente" />
+          <TableColumn fx:id="colNITC" prefWidth="75.0" text="NITCliente" />
+            <TableColumn fx:id="colNombreC" prefWidth="75.0" text="nombreCliente" />
+            <TableColumn fx:id="colApellidoC" prefWidth="75.0" text="apellidoCliente" />
+            <TableColumn fx:id="colDireccionC" prefWidth="75.0" text="direccionCliente" />
+            <TableColumn fx:id="colTelefonoC" prefWidth="75.0" text="telefonoCliente" />
+            <TableColumn fx:id="colCorreoC" prefWidth="83.0" text="correoCliente" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnRegresar" layoutX="14.0" layoutY="336.0" mnemonicParsing="false" onAction="#clickRegresar" prefHeight="48.0" prefWidth="90.0" stylesheets="@../resource/BodeguitaCSS.css">
+         <styleClass>
+            <String fx:value="button2" />
+            <String fx:value="button3" />
+         </styleClass>
+      </Button>
+      <ImageView fitHeight="25.0" fitWidth="85.0" layoutX="41.0" layoutY="348.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/IconRegresar.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="55.0" fitWidth="63.0" layoutX="57.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/IconCliente.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

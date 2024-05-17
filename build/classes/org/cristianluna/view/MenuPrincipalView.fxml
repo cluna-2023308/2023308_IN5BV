@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="404.0" prefWidth="635.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cristianluna.controller.MenuPrincipalController">
+   <children>
+      <ImageView fitHeight="404.0" fitWidth="656.0">
+         <image>
+            <Image url="@../images/Fondo.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="200.0" fitWidth="197.0" layoutX="456.0" layoutY="-19.0">
+         <image>
+            <Image url="@../images/IconoSinFondo.png" />
+         </image>
+      </ImageView>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="Modulos">
+            <items>
+                  <MenuItem fx:id="btnMenuCargoEmpleado" mnemonicParsing="false" onAction="#clickCargoEmpleados" text="Cargo Empleado" />
+                  <MenuItem fx:id="btnMenuTipoProducto" mnemonicParsing="false" onAction="#clickTipoProducto" text="Tipo Producto" />
+              <MenuItem mnemonicParsing="false" text="Productos" />
+                  <MenuItem fx:id="btnMenuProveedores" mnemonicParsing="false" onAction="#clickProveedores" text="Proveedores" />
+                  <MenuItem fx:id="btnMenuClientes" mnemonicParsing="false" onAction="#clickClientes" text="Cliente" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Reportes">
+            <items>
+              <MenuItem fx:id="btnMenuCompras" mnemonicParsing="false" onAction="#clickCompras" text="Compra" />
+                  <MenuItem mnemonicParsing="false" text="Venta" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Acerca de">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Ayuda" />
+                  <MenuItem fx:id="btnMenuProgramador" mnemonicParsing="false" onAction="#clickProgramador" text="Programador" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
