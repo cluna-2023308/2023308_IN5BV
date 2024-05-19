@@ -3,7 +3,9 @@ package org.cristianluna.controller;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -37,7 +40,7 @@ public class MenuComprasController implements Initializable{
     private ObservableList<Compras> listaCompras;
     @FXML private Button btnRegresar;
     @FXML private TextField txtNumeroDocumento;
-    @FXML private TextField txtFechaDocumento;
+    @FXML private DatePicker datePickerFechaDocumento;
     @FXML private TextField txtDescripcion;
     @FXML private TextField txtTotalDocumento;
     @FXML private TableView tblCompras;
@@ -62,14 +65,13 @@ public class MenuComprasController implements Initializable{
     public void cargarDatos(){
         tblCompras.setItems(getCompras());
         colNumDoc.setCellValueFactory(new PropertyValueFactory<Compras, Integer>("numeroDocumento"));
-        colFechaDoc.setCellValueFactory(new PropertyValueFactory<Compras, String>("fechaDocumento"));
+        colFechaDoc.setCellValueFactory(new PropertyValueFactory<Compras, LocalDate>("fechaDocumento"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<Compras, String>("descripcion"));
         colTotalDoc.setCellValueFactory(new PropertyValueFactory<Compras, String>("totalDocumento"));
     }
     
     public void seleccionarElemento(){
         txtNumeroDocumento.setText(String.valueOf(((Compras)tblCompras.getSelectionModel().getSelectedItem()).getNumeroDocumento()));
-        txtFechaDocumento.setText((((Compras)tblCompras.getSelectionModel().getSelectedItem()).getFechaDocumento()));
         txtDescripcion.setText((((Compras)tblCompras.getSelectionModel().getSelectedItem()).getDescripcion()));
         txtTotalDocumento.setText((((Compras)tblCompras.getSelectionModel().getSelectedItem()).getTotalDocumento()));
     }
@@ -80,8 +82,10 @@ public class MenuComprasController implements Initializable{
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("call sp_ListarCompras()");
             ResultSet resultado = procedimiento.executeQuery();
             while(resultado.next()){
-                lista.add(new Compras (resultado.getInt("numeroDocumento"), 
-                                        resultado.getString("fechaDocumento"),
+                java.sql.Date fecha = resultado.getDate("fechaDocumento");
+                LocalDate fechaDoc = fecha.toLocalDate();
+                lista.add(new Compras (resultado.getInt("numeroDocumento"),
+                                        fechaDoc,
                                         resultado.getString("descripcion"),
                                         resultado.getString("totalDocumento")
                 ));
@@ -116,6 +120,8 @@ public class MenuComprasController implements Initializable{
                 imgAgregar.setImage(new Image("org/cristianluna/images/IconAgregarCliente.png"));
                 imgEliminar.setImage(new Image("org/cristianluna/images/IconEliminarCliente.png"));
                 tipoDeOperaciones = operaciones.NINGUNO;
+                cargarDatos();
+                datePickerFechaDocumento.setValue(null);
                 break;
         }
     }
@@ -123,13 +129,14 @@ public class MenuComprasController implements Initializable{
     public void guardar() {
         Compras registro = new Compras();
         registro.setNumeroDocumento(Integer.parseInt(txtNumeroDocumento.getText()));
-        registro.setFechaDocumento(txtFechaDocumento.getText());
+        LocalDate fechaDoc = datePickerFechaDocumento.getValue();
+        Date fechaDocumento = Date.valueOf(fechaDoc);
         registro.setDescripcion(txtDescripcion.getText());
         registro.setTotalDocumento(txtTotalDocumento.getText());
         try{
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call Sp_agregarCompras(?, ?, ?, ?)}");
             procedimiento.setInt(1, registro.getNumeroDocumento());
-            procedimiento.setString(2, registro.getFechaDocumento());
+            procedimiento.setDate(2, fechaDocumento);
             procedimiento.setString(3, registro.getDescripcion());
             procedimiento.setString(4, registro.getTotalDocumento());
             procedimiento.execute();
@@ -200,6 +207,7 @@ public class MenuComprasController implements Initializable{
                 tipoDeOperaciones = operaciones.NINGUNO;
                 cargarDatos();
                 limpiarControles();
+                datePickerFechaDocumento.setValue(null);
                 break;
         }
     }
@@ -224,11 +232,12 @@ public class MenuComprasController implements Initializable{
         try{
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EditarCompras(?, ?, ?, ?)}");
             Compras registro = (Compras)tblCompras.getSelectionModel().getSelectedItem();
-            registro.setFechaDocumento(txtFechaDocumento.getText());
+            LocalDate fechaDoc = datePickerFechaDocumento.getValue();
+            Date fechaDocumento = Date.valueOf(fechaDoc);            
             registro.setDescripcion(txtDescripcion.getText());
             registro.setTotalDocumento(txtTotalDocumento.getText());
             procedimiento.setInt(1, registro.getNumeroDocumento());
-            procedimiento.setString(2, registro.getFechaDocumento());
+            procedimiento.setDate(2, fechaDocumento);
             procedimiento.setString(3, registro.getDescripcion());
             procedimiento.setString(4, registro.getTotalDocumento());
             procedimiento.execute();
@@ -239,21 +248,20 @@ public class MenuComprasController implements Initializable{
     
     public void desactivarControles(){
         txtNumeroDocumento.setEditable(false);
-        txtFechaDocumento.setEditable(false);
+        datePickerFechaDocumento.setEditable(false);
         txtDescripcion.setEditable(false);
         txtTotalDocumento.setEditable(false);
     }
     
     public void activarControles(){
         txtNumeroDocumento.setEditable(true);
-        txtFechaDocumento.setEditable(true);
+        datePickerFechaDocumento.setEditable(true);
         txtDescripcion.setEditable(true);
         txtTotalDocumento.setEditable(true);
     }
     
     public void limpiarControles(){
         txtNumeroDocumento.clear();
-        txtFechaDocumento.clear();
         txtDescripcion.clear();
         txtTotalDocumento.clear();
 
