@@ -3,6 +3,9 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -13,9 +16,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cristianluna.controller.MenuProveedoresController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cristianluna.controller.MenuProveedoresController">
    <children>
-      <ImageView fitHeight="557.0" fitWidth="961.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="544.0" fitWidth="961.0" layoutX="1.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/FondoProveedorView.png" />
          </image>
@@ -77,13 +80,13 @@
             </ImageView>
          </children>
       </GridPane>
-      <Button fx:id="btnRegresar" layoutX="25.0" layoutY="461.0" mnemonicParsing="false" onAction="#clickRegresar" prefHeight="48.0" prefWidth="97.0" stylesheets="@../resource/BodeguitaCSS.css">
+      <Button fx:id="btnRegresar" layoutX="25.0" layoutY="461.0" mnemonicParsing="false" onAction="#clickRegresar" prefHeight="48.0" prefWidth="107.0" stylesheets="@../resource/BodeguitaCSS.css">
          <styleClass>
             <String fx:value="button5" />
             <String fx:value="button6" />
          </styleClass>
       </Button>
-      <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="48.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="31.0" fitWidth="48.0" layoutX="57.0" layoutY="470.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/IconRegresar.png" />
          </image>
@@ -134,5 +137,15 @@
             <TableColumn fx:id="colPaginaWebP" prefWidth="75.0" text="paginaWeb" />
         </columns>
       </TableView>
+      <MenuBar layoutX="-4.0" prefHeight="25.0" prefWidth="963.0" stylesheets="@../resource/BodeguitaCSS.css">
+        <menus>
+          <Menu mnemonicParsing="false" text="Otros">
+            <items>
+              <MenuItem fx:id="btnMenuEmailProveedor" mnemonicParsing="false" onAction="#clickEmailProveedor" text="Email Proveedor" />
+                  <MenuItem fx:id="btnMenuTelefonoProveedor" mnemonicParsing="false" onAction="#clickTelefonoProveedor" text="Telefono Proveedor" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>

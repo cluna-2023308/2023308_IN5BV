@@ -12,9 +12,16 @@ import javafx.stage.Stage;
 import org.cristianluna.controller.MenuCargoEmpleadoController;
 import org.cristianluna.controller.MenuClientesController;
 import org.cristianluna.controller.MenuComprasController;
+import org.cristianluna.controller.MenuDetalleCompraController;
+import org.cristianluna.controller.MenuDetalleFacturaController;
+import org.cristianluna.controller.MenuEmailProveedorController;
+import org.cristianluna.controller.MenuEmpleadosController;
+import org.cristianluna.controller.MenuFacturaController;
 import org.cristianluna.controller.MenuPrincipalController;
+import org.cristianluna.controller.MenuProductosController;
 import org.cristianluna.controller.MenuProgramadorController;
 import org.cristianluna.controller.MenuProveedoresController;
+import org.cristianluna.controller.MenuTelefonoProveedorController;
 import org.cristianluna.controller.MenuTipoProductoController;
         
 
@@ -38,8 +45,9 @@ public class Principal extends Application {
       //Parent root = FXMLLoader.load(getClass().getResource("/org/luishernandez/view/MenuPrincipalView.fxml"));
       // Scene escena = new Scene(root);
       // escenarioPrincipal.setScene(escena);
-       escenarioPrincipal.show();      
+       escenarioPrincipal.show();
     }
+    
     
     public Initializable cambiarEscena(String fxmlName, int width, int heigth) throws Exception{
          Initializable resultado;
@@ -116,6 +124,69 @@ public class Principal extends Application {
         try{
             MenuComprasController menuComprasView = (MenuComprasController)cambiarEscena("MenuComprasView.fxml", 989, 557);
             menuComprasView.setEscenarioPrincipal(this);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void menuProductosV (){
+        try{
+            MenuProductosController menuProductosView = (MenuProductosController)cambiarEscena("MenuProductosView.fxml", 883, 498);
+            menuProductosView.setEscenarioPrincipal(this);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void menuEmailProveedorV() {
+        try{
+            MenuEmailProveedorController menuEmailProveedorView = (MenuEmailProveedorController)cambiarEscena("MenuEmailProveedorView.fxml", 772, 435);
+            menuEmailProveedorView.setEscenarioPrincipal(this);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void menuTelefonoProveedorV(){
+        try{
+            MenuTelefonoProveedorController menuTelefonoProveedorView = (MenuTelefonoProveedorController)cambiarEscena("MenuTelefonoProveedorView.fxml", 782, 442);
+            menuTelefonoProveedorView.setEscenarioPrincipal(this);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void menuDetalleCompraV(){
+        try{
+            MenuDetalleCompraController menuDetalleCompraView = (MenuDetalleCompraController)cambiarEscena("MenuDetalleCompraView.fxml", 819, 459);
+            menuDetalleCompraView.setEscenarioPrincipal(this);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void menuEmpleadosV(){
+        try{
+            MenuEmpleadosController menuEmpleadosView = (MenuEmpleadosController)cambiarEscena("MenuEmpleadosView.fxml", 789, 445);
+            menuEmpleadosView.setEscenarioPrincipal(this);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void menuFacturaV(){
+        try{
+            MenuFacturaController menuFacturaView = (MenuFacturaController)cambiarEscena("MenuFacturaView.fxml", 789, 444);
+            menuFacturaView.setEscenarioPrincipal(this);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void menuDetalleFacturaV(){
+        try{
+            MenuDetalleFacturaController menuDetalleFacturaView = (MenuDetalleFacturaController)cambiarEscena("MenuDetalleFacturaView.fxml", 751, 422);
+            menuDetalleFacturaView.setEscenarioPrincipal(this);
         } catch(Exception e){
             e.printStackTrace();
         }

@@ -14,7 +14,7 @@
             <Image url="@../images/Fondo.jpg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="200.0" fitWidth="197.0" layoutX="456.0" layoutY="-19.0">
+      <ImageView fitHeight="126.0" fitWidth="123.0" layoutX="533.0">
          <image>
             <Image url="@../images/IconoSinFondo.png" />
          </image>
@@ -25,15 +25,17 @@
             <items>
                   <MenuItem fx:id="btnMenuCargoEmpleado" mnemonicParsing="false" onAction="#clickCargoEmpleados" text="Cargo Empleado" />
                   <MenuItem fx:id="btnMenuTipoProducto" mnemonicParsing="false" onAction="#clickTipoProducto" text="Tipo Producto" />
-              <MenuItem mnemonicParsing="false" text="Productos" />
+              <MenuItem fx:id="btnMenuProductos" mnemonicParsing="false" onAction="#clickProductos" text="Productos" />
                   <MenuItem fx:id="btnMenuProveedores" mnemonicParsing="false" onAction="#clickProveedores" text="Proveedores" />
                   <MenuItem fx:id="btnMenuClientes" mnemonicParsing="false" onAction="#clickClientes" text="Cliente" />
+                  <MenuItem fx:id="btnMenuEmpleados" mnemonicParsing="false" onAction="#clickEmpleados" text="Empleados" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Reportes">
             <items>
               <MenuItem fx:id="btnMenuCompras" mnemonicParsing="false" onAction="#clickCompras" text="Compra" />
                   <MenuItem mnemonicParsing="false" text="Venta" />
+                  <MenuItem fx:id="btnMenuFactura" mnemonicParsing="false" onAction="#clickFactura" text="Factura" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Acerca de">

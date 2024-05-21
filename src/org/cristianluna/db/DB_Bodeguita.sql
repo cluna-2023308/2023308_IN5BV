@@ -6,7 +6,7 @@ create table Clientes(
 	codigoCliente int not null,
 	NITCliente varchar(10) not null,
 	nombreCliente varchar(50)not null,
-	apellidoCliente varchar(50) not null,
+	apellidoCliente varchar(50) not null,	
 	direccionCliente varchar(250),
 	telefonoCliente varchar(8),
 	correoCliente varchar(45),

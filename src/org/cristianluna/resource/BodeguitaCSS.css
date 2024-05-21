@@ -1,9 +1,24 @@
 .menu-bar{
-    -fx-background-color: #5D9E3B;
+    -fx-background-color: #79B85C;
     -fx-opacity: 0.5;
     -fx-border-width: 2.0;
     
 }
+
+.menu-bar2{
+    -fx-background-color: #FAEDDC;
+    -fx-opacity: 0.5;
+    -fx-border-width: 2.0;
+    
+}
+
+.menu-bar3{
+    -fx-background-color: #5271FF;
+    -fx-opacity: 0.5;
+    -fx-border-width: 2.0;
+    
+}
+
 .button1{
     -fx-background-color: transparent;
     
@@ -61,6 +76,32 @@
 
 .button10:hover{
     -fx-background-color: #FF3131;
+    -fx-font-size:22px;
+    -fx-effect: dropshadow(three-pass-box, black, 20, 0, 0, 0);   
+}
+
+.button11{
+    -fx-background-color: #C51A0B;
+    -fx-border-color: black;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.button12:hover{
+    -fx-background-color: #C51A0B;
+    -fx-font-size:22px;
+    -fx-effect: dropshadow(three-pass-box, black, 20, 0, 0, 0);   
+}
+
+.button13{
+    -fx-background-color: #5271FF;
+    -fx-border-color: black;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.button14:hover{
+    -fx-background-color: #5271FF;
     -fx-font-size:22px;
     -fx-effect: dropshadow(three-pass-box, black, 20, 0, 0, 0);   
 }

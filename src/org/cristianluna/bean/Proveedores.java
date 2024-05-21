@@ -9,7 +9,7 @@ public class Proveedores {
     private String razonSocial;
     private String contactoPrincipal;
     private String paginaWeb;
-
+    
     public Proveedores() {
     }
 
@@ -87,6 +87,4 @@ public class Proveedores {
     public void setPaginaWeb(String paginaWeb) {
         this.paginaWeb = paginaWeb;
     }
-    
-    
 }

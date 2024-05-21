@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="789.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cristianluna.controller.MenuFacturaController">
+   <children>
+      <ImageView fitHeight="501.0" fitWidth="787.0" layoutX="1.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/FondoFacturaView.png" />
+         </image>
+      </ImageView>
+      <GridPane layoutX="188.0" layoutY="64.0" prefHeight="90.0" prefWidth="530.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Numero Factura" />
+            <Label text="Estado" GridPane.rowIndex="1" />
+            <Label text="Total Factura" GridPane.rowIndex="2" />
+            <Label text="  Fecha Factura" GridPane.columnIndex="2" />
+            <Label text="  Codigo Cliente" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label text="  Codigo Empleado" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField GridPane.columnIndex="1" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker GridPane.columnIndex="3" />
+            <ComboBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <ComboBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <GridPane layoutX="29.0" layoutY="140.0" prefHeight="235.0" prefWidth="140.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="180.0" stylesheets="@../resource/BodeguitaCSS.css" text="Agregar">
+               <styleClass>
+                  <String fx:value="button13" />
+                  <String fx:value="button14" />
+               </styleClass>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="156.0" stylesheets="@../resource/BodeguitaCSS.css" text="Editar" GridPane.rowIndex="1">
+               <styleClass>
+                  <String fx:value="button13" />
+                  <String fx:value="button14" />
+               </styleClass>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="159.0" stylesheets="@../resource/BodeguitaCSS.css" text="Eliminar" GridPane.rowIndex="2">
+               <styleClass>
+                  <String fx:value="button13" />
+                  <String fx:value="button14" />
+               </styleClass>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="174.0" stylesheets="@../resource/BodeguitaCSS.css" text="Reportes" GridPane.rowIndex="3">
+               <styleClass>
+                  <String fx:value="button13" />
+                  <String fx:value="button14" />
+               </styleClass>
+            </Button>
+            <ImageView fitHeight="35.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/IconAgregarCliente.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="35.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/IconEditarCliente.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../images/IconEliminarCliente.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@../images/IconReportesCliente.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+      <Button fx:id="btnRegresar" layoutX="30.0" layoutY="397.0" mnemonicParsing="false" onAction="#clickRegresar" prefHeight="46.0" prefWidth="119.0" stylesheets="@../resource/BodeguitaCSS.css">
+         <styleClass>
+            <String fx:value="button13" />
+            <String fx:value="button14" />
+         </styleClass>
+      </Button>
+      <ImageView fitHeight="32.0" fitWidth="36.0" layoutX="72.0" layoutY="407.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/IconRegresar.png" />
+         </image>
+      </ImageView>
+      <TableView layoutX="202.0" layoutY="184.0" prefHeight="249.0" prefWidth="543.0">
+        <columns>
+          <TableColumn prefWidth="87.0" text="numeroFactura" />
+          <TableColumn prefWidth="76.0" text="estado" />
+            <TableColumn prefWidth="88.0" text="totalFactura" />
+            <TableColumn prefWidth="96.0" text="fechaFactura" />
+            <TableColumn prefWidth="100.0" text="codigoCliente" />
+            <TableColumn prefWidth="95.0" text="codigoEmpleado" />
+        </columns>
+      </TableView>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="789.0" styleClass="menu-bar3" stylesheets="@../resource/BodeguitaCSS.css">
+        <menus>
+          <Menu mnemonicParsing="false" text="Otros">
+            <items>
+              <MenuItem fx:id="btnMenuDetalleFactura" mnemonicParsing="false" onAction="#clickDetalleFactura" text="Detalle Factura" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
