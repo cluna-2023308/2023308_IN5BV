@@ -44,12 +44,12 @@
             <Label text="  Fecha Factura" GridPane.columnIndex="2" />
             <Label text="  Codigo Cliente" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label text="  Codigo Empleado" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <DatePicker GridPane.columnIndex="3" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <TextField fx:id="txtNumeroF" GridPane.columnIndex="1" />
+            <TextField fx:id="txtEstado" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtTotalF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="datePickerFechaFactura" GridPane.columnIndex="3" />
+            <ComboBox fx:id="cmbCodigoCli" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cmbCodigoEmp" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <GridPane layoutX="29.0" layoutY="140.0" prefHeight="235.0" prefWidth="140.0">
@@ -120,14 +120,14 @@
             <Image url="@../images/IconRegresar.png" />
          </image>
       </ImageView>
-      <TableView layoutX="202.0" layoutY="184.0" prefHeight="249.0" prefWidth="543.0">
+      <TableView fx:id="tblFactura" layoutX="202.0" layoutY="184.0" prefHeight="249.0" prefWidth="543.0">
         <columns>
-          <TableColumn prefWidth="87.0" text="numeroFactura" />
-          <TableColumn prefWidth="76.0" text="estado" />
-            <TableColumn prefWidth="88.0" text="totalFactura" />
-            <TableColumn prefWidth="96.0" text="fechaFactura" />
-            <TableColumn prefWidth="100.0" text="codigoCliente" />
-            <TableColumn prefWidth="95.0" text="codigoEmpleado" />
+          <TableColumn fx:id="colNumFac" prefWidth="87.0" text="numeroFactura" />
+          <TableColumn fx:id="colEstado" prefWidth="76.0" text="estado" />
+            <TableColumn fx:id="colTotalF" prefWidth="88.0" text="totalFactura" />
+            <TableColumn fx:id="colFechaF" prefWidth="96.0" text="fechaFactura" />
+            <TableColumn fx:id="colCodCliente" prefWidth="100.0" text="codigoCliente" />
+            <TableColumn fx:id="colCodEmpleado" prefWidth="95.0" text="codigoEmpleado" />
         </columns>
       </TableView>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="789.0" styleClass="menu-bar3" stylesheets="@../resource/BodeguitaCSS.css">

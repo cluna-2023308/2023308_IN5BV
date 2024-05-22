@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="789.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cristianluna.controller.MenuEmpleadosController">
    <children>
       <ImageView fitHeight="451.0" fitWidth="788.0" pickOnBounds="true" preserveRatio="true">
@@ -44,13 +43,13 @@
             <Label text="  Direccion" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label text="  Turno" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label text=" Codigo Cargo Empleado" GridPane.columnIndex="4" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="3" />
-            <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="5" />
+            <TextField fx:id="txtCodigoE" GridPane.columnIndex="1" />
+            <TextField fx:id="txtNombreE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtApellidoE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtSueldo" GridPane.columnIndex="3" />
+            <TextField fx:id="txtDireccion" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <TextField fx:id="txtTurno" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <ComboBox fx:id="cmbCodigoCargoE" prefWidth="150.0" GridPane.columnIndex="5" />
          </children>
       </GridPane>
       <GridPane layoutX="21.0" layoutY="130.0" prefHeight="234.0" prefWidth="142.0">
@@ -116,15 +115,15 @@
             <String fx:value="button8" />
          </styleClass>
       </Button>
-      <TableView layoutX="175.0" layoutY="157.0" prefHeight="243.0" prefWidth="601.0">
+      <TableView fx:id="tblEmpleados" layoutX="175.0" layoutY="157.0" prefHeight="243.0" prefWidth="601.0">
         <columns>
-          <TableColumn prefWidth="82.0" text="codigoEmpleado" />
-          <TableColumn prefWidth="95.0" text="nombresEmpleado" />
-            <TableColumn prefWidth="92.0" text="apellidosEmpleado" />
-            <TableColumn prefWidth="71.0" text="sueldo" />
-            <TableColumn prefWidth="87.0" text="direccion" />
-            <TableColumn prefWidth="71.0" text="turno" />
-            <TableColumn prefWidth="102.0" text="codigoCargoEmpleado" />
+          <TableColumn fx:id="colCodEmple" prefWidth="82.0" text="codigoEmpleado" />
+          <TableColumn fx:id="colNombreE" prefWidth="95.0" text="nombresEmpleado" />
+            <TableColumn fx:id="colApellidoE" prefWidth="92.0" text="apellidosEmpleado" />
+            <TableColumn fx:id="colSueldo" prefWidth="71.0" text="sueldo" />
+            <TableColumn fx:id="colDireccion" prefWidth="87.0" text="direccion" />
+            <TableColumn fx:id="colTurno" prefWidth="71.0" text="turno" />
+            <TableColumn fx:id="colCodCargoE" prefWidth="102.0" text="codigoCargoEmpleado" />
         </columns>
       </TableView>
       <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="68.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true">

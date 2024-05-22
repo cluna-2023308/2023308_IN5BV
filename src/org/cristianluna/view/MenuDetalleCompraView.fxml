@@ -39,11 +39,11 @@
             <Label text="Cantidad" GridPane.rowIndex="2" />
             <Label text="  Codigo Producto" GridPane.columnIndex="2" />
             <Label text="  Numero Documento" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="3" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <TextField fx:id="txtCodigoDetalleC" GridPane.columnIndex="1" />
+            <TextField fx:id="txtCostoU" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtCantidad" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="cmbCodigoProd" prefWidth="150.0" GridPane.columnIndex="3" />
+            <ComboBox fx:id="cmbCodigoNumDoc" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <GridPane layoutX="31.0" layoutY="130.0" prefHeight="247.0" prefWidth="151.0">
@@ -114,13 +114,13 @@
             <Image url="@../images/IconRegresar.png" />
          </image>
       </ImageView>
-      <TableView layoutX="219.0" layoutY="165.0" prefHeight="247.0" prefWidth="525.0">
+      <TableView fx:id="tblDetalleC" layoutX="219.0" layoutY="165.0" prefHeight="247.0" prefWidth="525.0">
         <columns>
-          <TableColumn prefWidth="113.0" text="codigoDetalleCompra" />
-          <TableColumn prefWidth="98.0" text="costoUnitario" />
-            <TableColumn prefWidth="84.0" text="cantidad" />
-            <TableColumn prefWidth="109.0" text="codigoProducto" />
-            <TableColumn prefWidth="120.0" text="numeroDocumento" />
+          <TableColumn fx:id="colCodDetalleC" prefWidth="113.0" text="codigoDetalleCompra" />
+          <TableColumn fx:id="colCostoU" prefWidth="98.0" text="costoUnitario" />
+            <TableColumn fx:id="colCantidad" prefWidth="84.0" text="cantidad" />
+            <TableColumn fx:id="colCodProd" prefWidth="109.0" text="codigoProducto" />
+            <TableColumn fx:id="colNumDoc" prefWidth="120.0" text="numeroDocumento" />
         </columns>
       </TableView>
    </children>

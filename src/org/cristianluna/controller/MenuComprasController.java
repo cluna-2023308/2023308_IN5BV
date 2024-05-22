@@ -148,6 +148,7 @@ public class MenuComprasController implements Initializable{
         }
     }
     
+    
     public void eliminar (){
         switch(tipoDeOperaciones){
             case ACTUALIZAR:

@@ -4,8 +4,8 @@ public class Clientes {
     private int codigoCliente;
     private String NITCliente;
     private String nombreCliente;
-    private String apellidoCliente ;
-    private String direccionCliente ;
+    private String apellidoCliente;
+    private String direccionCliente;
     private String telefonoCliente;
     private String correoCliente;
  

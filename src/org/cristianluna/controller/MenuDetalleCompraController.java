@@ -31,11 +31,12 @@ public class MenuDetalleCompraController implements Initializable{
     Fecha de modificacion: 22/05/2024
     */
     
-    
     private Principal escenarioPrincipal;
-    /*private ObservableList <DetalleCompra> listaDetalleC;*/
+    private ObservableList <DetalleCompra> listaDetalleC;
+    private ObservableList <Productos> listaProductos;
+    private ObservableList <Compras> listaCompras;
     @FXML private Button btnRegresarC;
-    /*@FXML private TableView tblDetalleC;
+    @FXML private TableView tblDetalleC;
     @FXML private TableColumn colCodDetalleC;
     @FXML private TableColumn colCostoU;
     @FXML private TableColumn colCantidad;
@@ -45,13 +46,16 @@ public class MenuDetalleCompraController implements Initializable{
     @FXML private TextField txtCostoU;
     @FXML private TextField txtCantidad;
     @FXML private ComboBox cmbCodigoProd;
-    @FXML private ComboBox cmbCodigoNumDoc;*/
+    @FXML private ComboBox cmbCodigoNumDoc;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        cargaDatos();
+        cmbCodigoProd.setItems(getProductos());
+        cmbCodigoNumDoc.setItems(getCompras());
     } 
     
-    /*public void cargaDatos(){
+    public void cargaDatos(){
         tblDetalleC.setItems(getDetalleCompra());
         colCodDetalleC.setCellValueFactory(new PropertyValueFactory<DetalleCompra, Integer>("codigoDetalleCompra"));
         colCostoU.setCellValueFactory(new PropertyValueFactory<DetalleCompra, Double>("costoUnitario"));
@@ -91,26 +95,26 @@ public class MenuDetalleCompraController implements Initializable{
         return resultado;
     }
     
-    public Compras buscarCompras (int numeroDocumento ){
-        Productos resultado = null;
+    /*public Compras buscarCompras (int numeroDocumento ){
+        Compras resultado = null;
         try{
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_BuscarCompras(?)}");
             procedimiento.setInt(1, numeroDocumento);
             ResultSet registro = procedimiento.executeQuery();
-            while (registro.next()){
-                java.sql.Date fecha = resultado.getDate("fechaDocumento");
+            while (registro.next()) {
+                java.sql.Date fecha = registro.getDate("fechaDocumento");
                 LocalDate fechaDoc = fecha.toLocalDate();
-                resultado = new Compras(registro.getInt("numeroDocumento"),
-                                            fechaDoc,
-                                            registro.getString("descripcion"),
-                                            registro.getString("totalDocumento")
+                resultado = new Compras(registro.setInt("numeroDocumento"),
+                                        fechaDoc,
+                                        registro.getString("descripcion"),
+                                        registro.getString("totalDocumento")
                 );
             }
         }catch (Exception e){
             e.printStackTrace();
         }    
         return resultado;
-    }
+    }*/
     
     public ObservableList<DetalleCompra> getDetalleCompra(){
         ArrayList<DetalleCompra> lista = new ArrayList<DetalleCompra>();
@@ -131,27 +135,49 @@ public class MenuDetalleCompraController implements Initializable{
         return listaDetalleC = FXCollections.observableArrayList(lista); 
     }
     
-    public ObservableList<Proveedores> getProveedores() {
-        ArrayList<Proveedores> listaPro = new ArrayList<>();
+    public ObservableList<Productos> getProductos() {
+        ArrayList<Productos> listaPro = new ArrayList<>();
         try {
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarProveedores()}");
             ResultSet resultado = procedimiento.executeQuery();
             while (resultado.next()) {
-                listaPro.add(new Proveedores(resultado.getInt("codigoProveedor"),
-                        resultado.getString("NITproveedor"),
-                        resultado.getString("nombreProveedor"),
-                        resultado.getString("apellidoProveedor"),
-                        resultado.getString("direccionProveedor"),
-                        resultado.getString("razonSocial"),
-                        resultado.getString("contactoPrincipal"),
-                        resultado.getString("paginaWeb")
+                listaPro.add(new Productos(resultado.getInt("codigoProducto"),
+                                            resultado.getString("descripcion"),
+                                            resultado.getDouble("precioUnitario"),
+                                            resultado.getDouble("precioDocena"),
+                                            resultado.getDouble("precioMayor"),
+                                            resultado.getString("imagenProducto"),
+                                            resultado.getInt("existencia"),
+                                            resultado.getInt("codigoTipoProducto"),
+                                            resultado.getInt("codigoProveedor")
                 ));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return listaProveedores = FXCollections.observableList(listaPro);
-    }*/
+        return listaProductos = FXCollections.observableList(listaPro);
+    }
+    
+    public ObservableList<Compras> getCompras() {
+        ArrayList<Compras> listaCom = new ArrayList<>();
+        try {
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarCompras()}");
+            ResultSet resultado = procedimiento.executeQuery();
+            while (resultado.next()) {
+               java.sql.Date fecha = resultado.getDate("fechaDocumento");
+                LocalDate fechaDoc = fecha.toLocalDate();
+                resultado = (ResultSet) new Compras(resultado.getInt("numeroDocumento"),
+                                        fechaDoc,
+                                        resultado.getString("descripcion"),
+                                        resultado.getString("totalDocumento")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaCompras = FXCollections.observableList(listaCom);
+    }
+    
 
     public Principal getEscenarioPrincipal() {
         return escenarioPrincipal;

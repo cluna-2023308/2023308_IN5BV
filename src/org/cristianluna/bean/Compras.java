@@ -25,7 +25,7 @@ public class Compras {
         this.descripcion = descripcion;
         this.totalDocumento = totalDocumento;
     }
-
+    
     public int getNumeroDocumento() {
         return numeroDocumento;
     }
