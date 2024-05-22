@@ -110,8 +110,8 @@ public class MenuClientesController implements Initializable {
     public void agregar(){
         switch(tipoDeOperaciones){
             case NINGUNO:
-                limpiarControles();
                 activarControles();
+                limpiarControles();
                 btnAgregarCliente.setText("Guardar");
                 btnEliminarCliente.setText("Cancelar");
                 btnEditarCliente.setDisable(true);
@@ -131,6 +131,7 @@ public class MenuClientesController implements Initializable {
                 imgAgregar.setImage(new Image("org/cristianluna/images/IconAgregarCliente.png"));
                 imgEliminar.setImage(new Image("org/cristianluna/images/IconEliminarCliente.png"));
                 tipoDeOperaciones = operaciones.NINGUNO;
+                cargarDatos();
                 break;
         }
     }
