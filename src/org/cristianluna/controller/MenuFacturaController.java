@@ -1,6 +1,7 @@
 package org.cristianluna.controller;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -19,6 +20,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javax.swing.JOptionPane;
 import org.cristianluna.bean.Clientes;
 import org.cristianluna.bean.Empleados;
 import org.cristianluna.bean.Factura;
@@ -37,6 +41,8 @@ public class MenuFacturaController implements Initializable{
     private ObservableList <Factura> listaFactura;
     private ObservableList <Clientes> listaClientes;
     private ObservableList <Empleados> listaEmpleados;
+    private enum operaciones{AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NINGUNO}
+    private operaciones tipoDeOperacion = operaciones.NINGUNO;
     @FXML private Button btnRegresar;
     @FXML private MenuItem btnMenuDetalleFactura;
     @FXML private TableView tblFactura;
@@ -52,6 +58,14 @@ public class MenuFacturaController implements Initializable{
     @FXML private DatePicker datePickerFechaFactura;    
     @FXML private ComboBox cmbCodigoCli;
     @FXML private ComboBox cmbCodigoEmp;
+    @FXML private Button btnAgregar;
+    @FXML private Button btnEditar;
+    @FXML private Button btnEliminar;
+    @FXML private Button btnReportes;
+    @FXML private ImageView imgAgregar;
+    @FXML private ImageView imgEliminar;
+    @FXML private ImageView imgEditar;
+    @FXML private ImageView imgReportes;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,9 +79,9 @@ public class MenuFacturaController implements Initializable{
         colNumFac.setCellValueFactory(new PropertyValueFactory<Factura, Integer>("numeroFactura"));
         colEstado.setCellValueFactory(new PropertyValueFactory<Factura, String>("estado"));
         colTotalF.setCellValueFactory(new PropertyValueFactory<Factura, Double>("totalFactura"));
-        colFechaF.setCellValueFactory(new PropertyValueFactory<Factura, String>("emailProveedor"));
-        colCodCliente.setCellValueFactory(new PropertyValueFactory<Factura, Integer>("descripcion"));
-        colCodEmpleado.setCellValueFactory(new PropertyValueFactory<Factura, Integer>("codigoProveedor"));
+        colFechaF.setCellValueFactory(new PropertyValueFactory<Factura, String>("fechaFactura"));
+        colCodCliente.setCellValueFactory(new PropertyValueFactory<Factura, Integer>("codigoCliente"));
+        colCodEmpleado.setCellValueFactory(new PropertyValueFactory<Factura, Integer>("codigoEmpleado"));
     }
     
     public void selecionarElementos(){
@@ -100,7 +114,7 @@ public class MenuFacturaController implements Initializable{
         return resultado;
     }
     
-        public Empleados buscarEmpleados (int codigoEmpleado ){
+    public Empleados buscarEmpleados (int codigoEmpleado ){
         Empleados resultado = null;
         try{
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_BuscarEmpleados(?)}");
@@ -184,6 +198,120 @@ public class MenuFacturaController implements Initializable{
             e.printStackTrace();
         }
         return listaEmpleados = FXCollections.observableList(listaEmp);
+    }
+    
+    public void agregar (){
+        switch(tipoDeOperacion){
+            case NINGUNO:
+                activarControles();
+                btnAgregar.setText("Guardar");
+                btnEliminar.setText("Cancelar");
+                btnEditar.setDisable(true);
+                btnReportes.setDisable(true);
+                imgAgregar.setImage(new Image("org/cristianluna/images/Guardar.png"));
+                imgEliminar.setImage(new Image("org/cristianluna/images/Eliminar.png"));
+                tipoDeOperacion = operaciones.ACTUALIZAR;
+                break;
+            case ACTUALIZAR:
+                guardar ();
+                desactivarControles();
+                limpiarControles ();
+                btnAgregar.setText("Agregar");
+                btnEliminar.setText("Eliminar");
+                btnEditar.setDisable(false);
+                btnReportes.setDisable(false);
+                imgAgregar.setImage(new Image("org/cristianluna/images/IconAgregarCliente.png"));
+                imgEliminar.setImage(new Image("org/cristianluna/images/IconEliminarCliente.png"));
+                tipoDeOperacion = operaciones.NINGUNO;
+                cargaDatos();
+                datePickerFechaFactura.setValue(null);
+                break;
+         }
+     }
+     
+    public void guardar (){
+         Factura registro = new Factura();
+         registro.setNumeroFactura(Integer.parseInt(txtNumeroF.getText()));
+         registro.setCodigoCliente(((Clientes)cmbCodigoCli.getSelectionModel().getSelectedItem()).getCodigoCliente());
+         registro.setCodigoEmpleado(((Empleados)cmbCodigoEmp.getSelectionModel().getSelectedItem()).getCodigoEmpleado());
+         registro.setEstado(txtEstado.getText());
+         registro.setTotalFactura(Double.parseDouble(txtTotalF.getText()));
+         LocalDate fechaDoc = datePickerFechaFactura.getValue();
+         Date fechaFactura = Date.valueOf(fechaDoc);
+         try {
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall
+            ("{call sp_agregarFactura(?, ?, ?, ?, ?, ?)}");
+                procedimiento.setInt(1, registro.getNumeroFactura());
+                procedimiento.setString(2, registro.getEstado());
+                procedimiento.setDouble(3, registro.getTotalFactura());
+                procedimiento.setDate(4, fechaFactura);
+                procedimiento.setInt(5, registro.getCodigoCliente());
+                procedimiento.setInt(6, registro.getCodigoEmpleado());
+                procedimiento.execute();
+            listaFactura.add(registro);
+         }catch (Exception e){
+             e.printStackTrace();
+         }
+     }
+    
+    public void eliminar (){
+        switch(tipoDeOperacion){
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnAgregar.setText("Agregar");
+                btnEliminar.setText("Eliminar");
+                btnEditar.setDisable(false);
+                btnReportes.setDisable(false);
+                imgAgregar.setImage(new Image("org/cristianluna/images/IconAgregarCliente.png"));
+                imgEliminar.setImage(new Image("org/cristianluna/images/IconEliminarCliente.png"));
+                tipoDeOperacion = operaciones.NINGUNO;
+                break;
+            default:
+                if(tblFactura.getSelectionModel().getSelectedItem() != null){
+                    int respuesta = JOptionPane.showConfirmDialog(null, "Confrimar si elimina el registro", "Eliminar Factura", 
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(respuesta == JOptionPane.YES_NO_OPTION){
+                        try{
+                            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EliminarProductos(?)}");
+                            procedimiento.setInt(1, ((Factura)tblFactura.getSelectionModel().getSelectedItem()).getNumeroFactura());
+                            procedimiento.execute();
+                            listaFactura.remove(tblFactura.getSelectionModel().getSelectedItem());
+                            limpiarControles();
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }else 
+                    JOptionPane.showMessageDialog(null, "Debe de seleccionar un Elemento");
+        }
+    }
+    
+    public void desactivarControles(){
+        txtNumeroF.setEditable(false);
+        txtEstado.setEditable(false);
+        txtTotalF.setEditable(false);
+        datePickerFechaFactura.setEditable(false);
+        cmbCodigoCli.setDisable(true);
+        cmbCodigoEmp.setDisable(true);
+    }
+    
+    public void activarControles(){
+        txtNumeroF.setEditable(true);
+        txtEstado.setEditable(true);
+        txtTotalF.setEditable(true);
+        datePickerFechaFactura.setEditable(true);
+        cmbCodigoCli.setDisable(false);
+        cmbCodigoEmp.setDisable(false);
+    }
+    
+    public void limpiarControles(){
+        txtNumeroF.clear();
+        txtEstado.clear();
+        txtTotalF.clear();
+        tblFactura.getSelectionModel().getSelectedItem();
+        cmbCodigoCli.getSelectionModel().getSelectedItem();
+        cmbCodigoEmp.getSelectionModel().getSelectedItem();
     }
 
     public Principal getEscenarioPrincipal() {

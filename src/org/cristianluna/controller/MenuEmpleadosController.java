@@ -16,6 +16,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javax.swing.JOptionPane;
 import org.cristianluna.bean.CargoEmpleado;
 import org.cristianluna.bean.Empleados;
 import org.cristianluna.db.Conexion;
@@ -33,6 +36,8 @@ public class MenuEmpleadosController implements Initializable{
     private Principal escenarioPrincipal;
     private ObservableList <Empleados> listaEmpleados;
     private ObservableList <CargoEmpleado> listaCargoE;
+    private enum operaciones{AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NINGUNO}
+    private operaciones tipoDeOperacion = operaciones.NINGUNO;
     @FXML private Button btnRegresar;
     @FXML private TableView tblEmpleados;
     @FXML private TableColumn colCodEmple;
@@ -49,12 +54,20 @@ public class MenuEmpleadosController implements Initializable{
     @FXML private TextField txtDireccion;
     @FXML private TextField txtTurno;
     @FXML private ComboBox cmbCodigoCargoE;
+    @FXML private Button btnAgregar;
+    @FXML private Button btnEditar;
+    @FXML private Button btnEliminar;
+    @FXML private Button btnReportes;
+    @FXML private ImageView imgAgregar;
+    @FXML private ImageView imgEliminar;
+    @FXML private ImageView imgEditar;
+    @FXML private ImageView imgReportes;
     
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cargaDatos();
-        cmbCodigoCargoE.setItems(getEmpleados());
+        cmbCodigoCargoE.setItems(getCargoEmpleado());
     } 
     
     public void cargaDatos(){
@@ -81,7 +94,7 @@ public class MenuEmpleadosController implements Initializable{
     public CargoEmpleado buscarCargoEmpleado (int codigoCargoEmpleado ){
         CargoEmpleado resultado = null;
         try{
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_BuscarEmpleados(?)}");
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_BuscarCargoEmpleado(?)}");
             procedimiento.setInt(1, codigoCargoEmpleado);
             ResultSet registro = procedimiento.executeQuery();
             while (registro.next()){
@@ -120,7 +133,7 @@ public class MenuEmpleadosController implements Initializable{
     public ObservableList<CargoEmpleado> getCargoEmpleado() {
         ArrayList<CargoEmpleado> listaCargo = new ArrayList<>();
         try {
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarDetalleCompra()}");
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarCargoEmpleado()}");
             ResultSet resultado = procedimiento.executeQuery();
             while (resultado.next()) {
                 listaCargo.add(new CargoEmpleado(resultado.getInt("codigoCargoEmpleado"),
@@ -132,6 +145,124 @@ public class MenuEmpleadosController implements Initializable{
             e.printStackTrace();
         }
         return listaCargoE = FXCollections.observableList(listaCargo);
+    }
+    
+    public void agregar (){
+        switch(tipoDeOperacion){
+            case NINGUNO:
+                activarControles();
+                btnAgregar.setText("Guardar");
+                btnEliminar.setText("Cancelar");
+                btnEditar.setDisable(true);
+                btnReportes.setDisable(true);
+                imgAgregar.setImage(new Image("org/cristianluna/images/Guardar.png"));
+                imgEliminar.setImage(new Image("org/cristianluna/images/Eliminar.png"));
+                tipoDeOperacion = operaciones.ACTUALIZAR;
+                break;
+            case ACTUALIZAR:
+                guardar ();
+                desactivarControles();
+                limpiarControles ();
+                btnAgregar.setText("Agregar");
+                btnEliminar.setText("Eliminar");
+                btnEditar.setDisable(false);
+                btnReportes.setDisable(false);
+                imgAgregar.setImage(new Image("org/cristianluna/images/IconAgregarCliente.png"));
+                imgEliminar.setImage(new Image("org/cristianluna/images/IconEliminarCliente.png"));
+                tipoDeOperacion = operaciones.NINGUNO;
+                cargaDatos();
+                break;
+         }
+     }
+     
+    public void guardar (){
+         Empleados registro = new Empleados();
+         registro.setCodigoEmpleado(Integer.parseInt(txtCodigoE.getText()));
+         registro.setCodigoCargoEmpleado(((CargoEmpleado)cmbCodigoCargoE.getSelectionModel().getSelectedItem()).getCodigoCargoEmpleado());
+         registro.setNombresEmpleado(txtNombreE.getText());
+         registro.setApellidosEmpleado(txtApellidoE.getText());
+         registro.setSueldo(Double.parseDouble(txtSueldo.getText()));
+         registro.setDireccion(txtDireccion.getText());
+         registro.setTurno(txtTurno.getText());
+         try {
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall
+            ("{call sp_agregarEmpleados(?, ?, ?, ?, ?, ?, ?)}");
+                procedimiento.setInt(1, registro.getCodigoEmpleado());
+                procedimiento.setString(2, registro.getNombresEmpleado());
+                procedimiento.setString(3, registro.getApellidosEmpleado());
+                procedimiento.setDouble(4, registro.getSueldo());
+                procedimiento.setString(5, registro.getDireccion());
+                procedimiento.setString(6, registro.getTurno());
+                procedimiento.setInt(7, registro.getCodigoCargoEmpleado());
+                procedimiento.execute();
+            listaEmpleados.add(registro);
+         }catch (Exception e){
+             e.printStackTrace();
+         }
+     }
+    
+    public void eliminar (){
+        switch(tipoDeOperacion){
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnAgregar.setText("Agregar");
+                btnEliminar.setText("Eliminar");
+                btnEditar.setDisable(false);
+                btnReportes.setDisable(false);
+                imgAgregar.setImage(new Image("org/cristianluna/images/IconAgregarCliente.png"));
+                imgEliminar.setImage(new Image("org/cristianluna/images/IconEliminarCliente.png"));
+                tipoDeOperacion = operaciones.NINGUNO;
+                break;
+            default:
+                if(tblEmpleados.getSelectionModel().getSelectedItem() != null){
+                    int respuesta = JOptionPane.showConfirmDialog(null, "Confrimar si elimina el registro", "Eliminar Empleado", 
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(respuesta == JOptionPane.YES_NO_OPTION){
+                        try{
+                            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EliminarEmpleados(?)}");
+                            procedimiento.setInt(1, ((Empleados)tblEmpleados.getSelectionModel().getSelectedItem()).getCodigoEmpleado());
+                            procedimiento.execute();
+                            listaEmpleados.remove(tblEmpleados.getSelectionModel().getSelectedItem());
+                            limpiarControles();
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }else 
+                    JOptionPane.showMessageDialog(null, "Debe de seleccionar un Elemento");
+        }
+    }
+    
+    public void desactivarControles(){
+        txtCodigoE.setEditable(false);
+        txtNombreE.setEditable(false);
+        txtApellidoE.setEditable(false);
+        txtSueldo.setEditable(false);
+        txtDireccion.setEditable(false);
+        txtTurno.setEditable(false);
+        cmbCodigoCargoE.setDisable(true);
+    }
+    
+    public void activarControles(){
+        txtCodigoE.setEditable(true);
+        txtNombreE.setEditable(true);
+        txtApellidoE.setEditable(true);
+        txtSueldo.setEditable(true);
+        txtDireccion.setEditable(true);
+        txtTurno.setEditable(true);
+        cmbCodigoCargoE.setDisable(false);
+    }
+    
+    public void limpiarControles(){
+        txtCodigoE.clear();
+        txtNombreE.clear();
+        txtApellidoE.clear();
+        txtSueldo.clear();
+        txtDireccion.clear();
+        txtTurno.clear();
+        tblEmpleados.getSelectionModel().getSelectedItem();
+        cmbCodigoCargoE.getSelectionModel().getSelectedItem();
     }
 
     public Principal getEscenarioPrincipal() {
