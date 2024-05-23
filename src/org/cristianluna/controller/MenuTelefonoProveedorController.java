@@ -229,6 +229,73 @@ public class MenuTelefonoProveedorController implements Initializable{
         }
     }
     
+    public void editar(){
+        switch(tipoDeOperacion){
+            case NINGUNO:
+                if(tblTelefonoP.getSelectionModel().getSelectedItem()!= null){
+                    btnEditar.setText("Actualizar");
+                    btnReportes.setText("Cancelar");
+                    btnAgregar.setDisable(true);
+                    btnEliminar.setDisable(true);
+                    activarControles();
+                    imgEditar.setImage(new Image("org/cristianluna/images/Guardar.png"));
+                    imgReportes.setImage(new Image("org/cristianluna/images/Eliminar.png"));                    
+                    txtCodigoTelefonoP.setEditable(false);
+                    cmbCodigoProv.setDisable(true);
+                    tipoDeOperacion = operaciones.ACTUALIZAR;
+                }else
+                    JOptionPane.showMessageDialog(null, "Debe de seleccionar algun Elemento");
+                break;
+            case ACTUALIZAR:
+                actualizar();
+                btnEditar.setText("Editar");
+                btnReportes.setText("Reportes");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("org/cristianluna/images/IconEditarCliente.png"));
+                imgReportes.setImage(new Image("org/cristianluna/images/IconReportesCliente.png"));
+                desactivarControles();
+                tipoDeOperacion = operaciones.NINGUNO;
+                cargaDatos();
+                limpiarControles();
+                break;
+        }
+    }
+    
+    public void reporte() {
+        switch (tipoDeOperacion){
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnEditar.setText("Editar");
+                btnReportes.setText("Reporte");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("org/cristianluna/images/IconEditarCliente.png"));
+                imgReportes.setImage(new Image("org/cristianluna/images/IconReportesCliente.png"));
+                tipoDeOperacion = operaciones.NINGUNO;
+                break;
+        }
+    }
+    
+    public void actualizar (){
+        try{
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EditarTelefonoProveedor(?, ?, ?, ?, ?)}");
+            TelefonoProveedor registro = (TelefonoProveedor)tblTelefonoP.getSelectionModel().getSelectedItem();
+            registro.setNumeroPrincipal(txtNumeroPrin.getText());
+            registro.setNumeroSecundario(txtNumeroSecu.getText());
+            registro.setObservaciones(txtObservacion.getText());
+            procedimiento.setInt(1, registro.getCodigoTelefonoProveedor());
+            procedimiento.setString(2, registro.getNumeroPrincipal());
+            procedimiento.setString(3, registro.getNumeroSecundario());
+            procedimiento.setString(4, registro.getObservaciones());
+            procedimiento.setInt(5, registro.getCodigoProveedor());
+            procedimiento.execute();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
     public void desactivarControles(){
         txtCodigoTelefonoP.setEditable(false);
         txtNumeroPrin.setEditable(false);

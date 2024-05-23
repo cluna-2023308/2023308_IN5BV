@@ -273,7 +273,7 @@ public class MenuFacturaController implements Initializable{
                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(respuesta == JOptionPane.YES_NO_OPTION){
                         try{
-                            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EliminarProductos(?)}");
+                            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EliminarFactura(?)}");
                             procedimiento.setInt(1, ((Factura)tblFactura.getSelectionModel().getSelectedItem()).getNumeroFactura());
                             procedimiento.execute();
                             listaFactura.remove(tblFactura.getSelectionModel().getSelectedItem());
@@ -284,6 +284,76 @@ public class MenuFacturaController implements Initializable{
                     }
                 }else 
                     JOptionPane.showMessageDialog(null, "Debe de seleccionar un Elemento");
+        }
+    }
+    
+    public void editar(){
+        switch(tipoDeOperacion){
+            case NINGUNO:
+                if(tblFactura.getSelectionModel().getSelectedItem()!= null){
+                    btnEditar.setText("Actualizar");
+                    btnReportes.setText("Cancelar");
+                    btnAgregar.setDisable(true);
+                    btnEliminar.setDisable(true);
+                    activarControles();
+                    imgEditar.setImage(new Image("org/cristianluna/images/Guardar.png"));
+                    imgReportes.setImage(new Image("org/cristianluna/images/Eliminar.png"));                    
+                    txtNumeroF.setEditable(false);
+                    cmbCodigoCli.setDisable(true);
+                    cmbCodigoEmp.setDisable(true);
+                    tipoDeOperacion = operaciones.ACTUALIZAR;
+                }else
+                    JOptionPane.showMessageDialog(null, "Debe de seleccionar algun Elemento");
+                break;
+            case ACTUALIZAR:
+                actualizar();
+                btnEditar.setText("Editar");
+                btnReportes.setText("Reportes");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("org/cristianluna/images/IconEditarCliente.png"));
+                imgReportes.setImage(new Image("org/cristianluna/images/IconReportesCliente.png"));
+                desactivarControles();
+                tipoDeOperacion = operaciones.NINGUNO;
+                cargaDatos();
+                limpiarControles();
+                break;
+        }
+    }
+    
+    public void reporte() {
+        switch (tipoDeOperacion){
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnEditar.setText("Editar");
+                btnReportes.setText("Reporte");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("org/cristianluna/images/IconEditarCliente.png"));
+                imgReportes.setImage(new Image("org/cristianluna/images/IconReportesCliente.png"));
+                tipoDeOperacion = operaciones.NINGUNO;
+                break;
+        }
+    }
+    
+    public void actualizar (){
+        try{
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EditarFactura(?, ?, ?, ?, ?, ?)}");
+            Factura registro = (Factura)tblFactura.getSelectionModel().getSelectedItem();
+            registro.setEstado(txtEstado.getText());
+            registro.setTotalFactura(Double.parseDouble(txtTotalF.getText()));
+            LocalDate fechaFac = datePickerFechaFactura.getValue();
+            Date fechaFactura = Date.valueOf(fechaFac);
+            procedimiento.setInt(1, registro.getNumeroFactura());
+            procedimiento.setString(2, registro.getEstado());
+            procedimiento.setDouble(3, registro.getTotalFactura());
+            procedimiento.setDate(4, fechaFactura);
+            procedimiento.setInt(5, registro.getCodigoCliente());
+            procedimiento.setInt(6, registro.getNumeroFactura());
+            procedimiento.execute();
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
     

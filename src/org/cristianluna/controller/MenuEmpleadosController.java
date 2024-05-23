@@ -234,6 +234,77 @@ public class MenuEmpleadosController implements Initializable{
         }
     }
     
+    public void editar(){
+        switch(tipoDeOperacion){
+            case NINGUNO:
+                if(tblEmpleados.getSelectionModel().getSelectedItem()!= null){
+                    btnEditar.setText("Actualizar");
+                    btnReportes.setText("Cancelar");
+                    btnAgregar.setDisable(true);
+                    btnEliminar.setDisable(true);
+                    activarControles();
+                    imgEditar.setImage(new Image("org/cristianluna/images/Guardar.png"));
+                    imgReportes.setImage(new Image("org/cristianluna/images/Eliminar.png"));                    
+                    txtCodigoE.setEditable(false);
+                    cmbCodigoCargoE.setDisable(true);
+                    tipoDeOperacion = operaciones.ACTUALIZAR;
+                }else
+                    JOptionPane.showMessageDialog(null, "Debe de seleccionar algun Elemento");
+                break;
+            case ACTUALIZAR:
+                actualizar();
+                btnEditar.setText("Editar");
+                btnReportes.setText("Reportes");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("org/cristianluna/images/IconEditarCliente.png"));
+                imgReportes.setImage(new Image("org/cristianluna/images/IconReportesCliente.png"));
+                desactivarControles();
+                tipoDeOperacion = operaciones.NINGUNO;
+                cargaDatos();
+                limpiarControles();
+                break;
+        }
+    }
+    
+    public void reporte() {
+        switch (tipoDeOperacion){
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnEditar.setText("Editar");
+                btnReportes.setText("Reporte");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("org/cristianluna/images/IconEditarCliente.png"));
+                imgReportes.setImage(new Image("org/cristianluna/images/IconReportesCliente.png"));
+                tipoDeOperacion = operaciones.NINGUNO;
+                break;
+        }
+    }
+    
+    public void actualizar (){
+        try{
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EditarEmpleados(?, ?, ?, ?, ?, ?, ?)}");
+            Empleados registro = (Empleados)tblEmpleados.getSelectionModel().getSelectedItem();
+            registro.setNombresEmpleado(txtNombreE.getText());
+            registro.setApellidosEmpleado(txtApellidoE.getText());
+            registro.setSueldo(Double.parseDouble(txtSueldo.getText()));
+            registro.setDireccion(txtDireccion.getText());
+            registro.setTurno(txtTurno.getText());
+            procedimiento.setInt(1, registro.getCodigoEmpleado());
+            procedimiento.setString(2, registro.getNombresEmpleado());
+            procedimiento.setString(3, registro.getApellidosEmpleado());
+            procedimiento.setDouble(4, registro.getSueldo());
+            procedimiento.setString(5, registro.getDireccion());
+            procedimiento.setString(6, registro.getTurno());
+            procedimiento.setInt(7, registro.getCodigoCargoEmpleado());
+            procedimiento.execute();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
     public void desactivarControles(){
         txtCodigoE.setEditable(false);
         txtNombreE.setEditable(false);

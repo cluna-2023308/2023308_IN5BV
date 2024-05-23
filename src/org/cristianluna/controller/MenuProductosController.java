@@ -296,6 +296,81 @@ public class MenuProductosController implements Initializable{
         }
     }
     
+    public void editar(){
+        switch(tipoDeOperacion){
+            case NINGUNO:
+                if(tblProductos.getSelectionModel().getSelectedItem()!= null){
+                    btnEditar.setText("Actualizar");
+                    btnReportes.setText("Cancelar");
+                    btnAgregar.setDisable(true);
+                    btnEliminar.setDisable(true);
+                    activarControles();
+                    imgEditar.setImage(new Image("org/cristianluna/images/Guardar.png"));
+                    imgReportes.setImage(new Image("org/cristianluna/images/Eliminar.png"));                    
+                    txtCodigoProd.setEditable(false);
+                    cmbCodigoTipoP.setDisable(true);
+                    cmbCodigoProv.setDisable(true);
+                    tipoDeOperacion = operaciones.ACTUALIZAR;
+                }else
+                    JOptionPane.showMessageDialog(null, "Debe de seleccionar algun Elemento");
+                break;
+            case ACTUALIZAR:
+                actualizar();
+                btnEditar.setText("Editar");
+                btnReportes.setText("Reportes");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("org/cristianluna/images/IconEditarCliente.png"));
+                imgReportes.setImage(new Image("org/cristianluna/images/IconReportesCliente.png"));
+                desactivarControles();
+                tipoDeOperacion = operaciones.NINGUNO;
+                cargaDatos();
+                limpiarControles();
+                break;
+        }
+    }
+    
+    public void reporte() {
+        switch (tipoDeOperacion){
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnEditar.setText("Editar");
+                btnReportes.setText("Reporte");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("org/cristianluna/images/IconEditarCliente.png"));
+                imgReportes.setImage(new Image("org/cristianluna/images/IconReportesCliente.png"));
+                tipoDeOperacion = operaciones.NINGUNO;
+                break;
+        }
+    }
+    
+    public void actualizar (){
+        try{
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EditarProductos(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+            Productos registro = (Productos)tblProductos.getSelectionModel().getSelectedItem();
+            registro.setDescripcion(txtDescPro.getText());
+            registro.setPrecioUnitario(Double.parseDouble(txtPrecioU.getText()));
+            registro.setPrecioDocena(Double.parseDouble(txtPrecioD.getText()));
+            registro.setPrecioMayor(Double.parseDouble(txtPrecioM.getText()));
+            registro.setImagenProducto(txtImageP.getText());
+            registro.setExistencia(Integer.parseInt(txtExistencia.getText()));
+            procedimiento.setInt(1, registro.getCodigoProducto());
+            procedimiento.setString(2, registro.getDescripcion());
+            procedimiento.setDouble(3, registro.getPrecioUnitario());
+            procedimiento.setDouble(4, registro.getPrecioDocena());
+            procedimiento.setDouble(5, registro.getPrecioMayor());
+            procedimiento.setString(6, registro.getImagenProducto());
+            procedimiento.setInt(7, registro.getExistencia());
+            procedimiento.setInt(8, registro.getCodigoTipoProducto());
+            procedimiento.setInt(9, registro.getCodigoProveedor());
+            procedimiento.execute();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
     public void desactivarControles(){
         txtCodigoProd.setEditable(false);
         txtDescPro.setEditable(false);

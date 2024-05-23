@@ -60,7 +60,7 @@
                   <String fx:value="button6" />
                </styleClass>
             </Button>
-            <Button fx:id="btnEditar" mnemonicParsing="false" prefHeight="45.0" prefWidth="160.0" stylesheets="@../resource/BodeguitaCSS.css" text="Editar" GridPane.rowIndex="1">
+            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="45.0" prefWidth="160.0" stylesheets="@../resource/BodeguitaCSS.css" text="Editar" GridPane.rowIndex="1">
                <styleClass>
                   <String fx:value="button5" />
                   <String fx:value="button6" />
@@ -72,7 +72,7 @@
                   <String fx:value="button6" />
                </styleClass>
             </Button>
-            <Button fx:id="btnReportes" mnemonicParsing="false" prefHeight="45.0" prefWidth="191.0" stylesheets="@../resource/BodeguitaCSS.css" text="Reportes" GridPane.rowIndex="3">
+            <Button fx:id="btnReportes" mnemonicParsing="false" onAction="#reporte" prefHeight="45.0" prefWidth="191.0" stylesheets="@../resource/BodeguitaCSS.css" text="Reportes" GridPane.rowIndex="3">
                <styleClass>
                   <String fx:value="button5" />
                   <String fx:value="button6" />
