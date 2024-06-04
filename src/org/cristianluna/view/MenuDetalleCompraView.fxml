@@ -114,7 +114,7 @@
             <Image url="@../images/IconRegresar.png" />
          </image>
       </ImageView>
-      <TableView fx:id="tblDetalleC" layoutX="219.0" layoutY="165.0" prefHeight="247.0" prefWidth="525.0">
+      <TableView fx:id="tblDetalleC" layoutX="219.0" layoutY="165.0" onMouseClicked="#selecionarElementos" prefHeight="247.0" prefWidth="525.0">
         <columns>
           <TableColumn fx:id="colCodDetalleC" prefWidth="113.0" text="codigoDetalleCompra" />
           <TableColumn fx:id="colCostoU" prefWidth="98.0" text="costoUnitario" />
