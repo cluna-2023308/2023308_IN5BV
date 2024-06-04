@@ -1090,3 +1090,48 @@ delimiter ;
 
 call sp_EditarDetalleFactura(01, 34.89, 6, 01, 01);
 call sp_ListarDetalleFactura();
+
+/*-- funcion sobre el precio unitario
+delimiter $$
+	create function fn_TraerPrecioUnitario(codProd varchar(15)) returns decimal(10, 2)
+	deterministic
+	begin
+		declare precio decimal(10, 2);
+		set precio = (select detallecompra.costoUnitario from detallecompra
+			where detallecompra.codigoProducto-codPro);
+			return precio;
+	end $$
+delimiter ;
+
+-- total compra
+delimiter $$
+	create function fn_TotalCompra(numeroDocumento int) returns decimal(10,2)
+    deterministic
+    begin
+		declare sumatoria decimal(10, 2);
+        
+        set sumatoria = (select sum(cantidad*costoUnitario) from detallecompra
+			where numeroDocumento = numeroDocumento);
+			return sumatoria;
+	end $$
+
+-- Precio Detalle Factura
+delimiter $$
+	create trigger tr_insertarPrecioDetalleFactura_Before_Insert
+    before insert on detallefactura
+    for each row
+		begin
+			declare total decimal(10,2);
+           set new.precioUnitario = (select precioUnitario from productos
+									where productos.codigoProducto-new.codigoProducto); 
+    end $$
+delimiter ;*/
+
+-- Insertar precios en Productos
+/*delimiter $$
+	create trigger tr_insertarPreciosProductos_after_insert
+    after insert on detallecompra
+    for each row
+		begin
+        call sp_EditarProductos(new.codigoProductos,
+								)*/
