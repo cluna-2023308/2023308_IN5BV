@@ -69,13 +69,13 @@ public class MenuComprasController implements Initializable{
         colNumDoc.setCellValueFactory(new PropertyValueFactory<Compras, Integer>("numeroDocumento"));
         colFechaDoc.setCellValueFactory(new PropertyValueFactory<Compras, LocalDate>("fechaDocumento"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<Compras, String>("descripcion"));
-        colTotalDoc.setCellValueFactory(new PropertyValueFactory<Compras, String>("totalDocumento"));
+        colTotalDoc.setCellValueFactory(new PropertyValueFactory<Compras, Double>("totalDocumento"));
     }
     
     public void seleccionarElemento(){
         txtNumeroDocumento.setText(String.valueOf(((Compras)tblCompras.getSelectionModel().getSelectedItem()).getNumeroDocumento()));
         txtDescripcion.setText((((Compras)tblCompras.getSelectionModel().getSelectedItem()).getDescripcion()));
-        txtTotalDocumento.setText((((Compras)tblCompras.getSelectionModel().getSelectedItem()).getTotalDocumento()));
+        txtTotalDocumento.setText(String.valueOf((((Compras)tblCompras.getSelectionModel().getSelectedItem()).getTotalDocumento())));
     }
     
     public ObservableList<Compras> getCompras(){
@@ -89,7 +89,7 @@ public class MenuComprasController implements Initializable{
                 lista.add(new Compras (resultado.getInt("numeroDocumento"),
                                         fechaDoc,
                                         resultado.getString("descripcion"),
-                                        resultado.getString("totalDocumento")
+                                        resultado.getDouble("totalDocumento")
                 ));
             }
         }catch(Exception e){
@@ -134,13 +134,13 @@ public class MenuComprasController implements Initializable{
         LocalDate fechaDoc = datePickerFechaDocumento.getValue();
         Date fechaDocumento = Date.valueOf(fechaDoc);
         registro.setDescripcion(txtDescripcion.getText());
-        registro.setTotalDocumento(txtTotalDocumento.getText());
+        registro.setTotalDocumento(Double.parseDouble(txtTotalDocumento.getText()));
         try{
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call Sp_agregarCompras(?, ?, ?, ?)}");
             procedimiento.setInt(1, registro.getNumeroDocumento());
             procedimiento.setDate(2, fechaDocumento);
             procedimiento.setString(3, registro.getDescripcion());
-            procedimiento.setString(4, registro.getTotalDocumento());
+            procedimiento.setDouble(4, registro.getTotalDocumento());
             procedimiento.execute();
             listaCompras.add(registro);
         }catch (Exception e){
@@ -238,11 +238,11 @@ public class MenuComprasController implements Initializable{
             LocalDate fechaDoc = datePickerFechaDocumento.getValue();
             Date fechaDocumento = Date.valueOf(fechaDoc);            
             registro.setDescripcion(txtDescripcion.getText());
-            registro.setTotalDocumento(txtTotalDocumento.getText());
+            registro.setTotalDocumento(Double.parseDouble(txtTotalDocumento.getText()));
             procedimiento.setInt(1, registro.getNumeroDocumento());
             procedimiento.setDate(2, fechaDocumento);
             procedimiento.setString(3, registro.getDescripcion());
-            procedimiento.setString(4, registro.getTotalDocumento());
+            procedimiento.setDouble(4, registro.getTotalDocumento());
             procedimiento.execute();
         }catch(Exception e){
             e.printStackTrace();

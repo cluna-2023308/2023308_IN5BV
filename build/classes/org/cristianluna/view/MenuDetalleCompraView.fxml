@@ -57,46 +57,46 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="178.0" stylesheets="@../resource/BodeguitaCSS.css" text="Agregar">
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="45.0" prefWidth="178.0" stylesheets="@../resource/BodeguitaCSS.css" text="Agregar">
                <styleClass>
                   <String fx:value="button2" />
                   <String fx:value="button3" />
                </styleClass>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="168.0" stylesheets="@../resource/BodeguitaCSS.css" text="Editar" GridPane.rowIndex="1">
+            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="45.0" prefWidth="168.0" stylesheets="@../resource/BodeguitaCSS.css" text="Editar" GridPane.rowIndex="1">
                <styleClass>
                   <String fx:value="button2" />
                   <String fx:value="button3" />
                </styleClass>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="172.0" stylesheets="@../resource/BodeguitaCSS.css" text="Eliminar" GridPane.rowIndex="2">
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" prefHeight="45.0" prefWidth="172.0" stylesheets="@../resource/BodeguitaCSS.css" text="Eliminar" GridPane.rowIndex="2">
                <styleClass>
                   <String fx:value="button2" />
                   <String fx:value="button3" />
                </styleClass>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="151.0" stylesheets="@../resource/BodeguitaCSS.css" text="Reportes" GridPane.rowIndex="3">
+            <Button fx:id="btnReportes" mnemonicParsing="false" onAction="#reporte" prefHeight="45.0" prefWidth="151.0" stylesheets="@../resource/BodeguitaCSS.css" text="Reportes" GridPane.rowIndex="3">
                <styleClass>
                   <String fx:value="button2" />
                   <String fx:value="button3" />
                </styleClass>
             </Button>
-            <ImageView fitHeight="38.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgAgregar" fitHeight="38.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/IconAgregarCliente.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+            <ImageView fx:id="imgEditar" fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                <image>
                   <Image url="@../images/IconEditarCliente.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="40.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+            <ImageView fx:id="imgEliminar" fitHeight="40.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                <image>
                   <Image url="@../images/IconEliminarCliente.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="39.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+            <ImageView fx:id="imgReportes" fitHeight="39.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
                <image>
                   <Image url="@../images/IconReportesCliente.png" />
                </image>

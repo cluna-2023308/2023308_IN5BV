@@ -14,18 +14,18 @@ public class Compras {
     private int numeroDocumento;
     private LocalDate fechaDocumento;
     private String descripcion;
-    private String totalDocumento;
+    private Double totalDocumento;
 
     public Compras() {
     }
 
-    public Compras(int numeroDocumento, LocalDate fechaDocumento, String descripcion, String totalDocumento) {
+    public Compras(int numeroDocumento, LocalDate fechaDocumento, String descripcion, Double totalDocumento) {
         this.numeroDocumento = numeroDocumento;
         this.fechaDocumento = fechaDocumento;
         this.descripcion = descripcion;
         this.totalDocumento = totalDocumento;
     }
-    
+
     public int getNumeroDocumento() {
         return numeroDocumento;
     }
@@ -50,11 +50,18 @@ public class Compras {
         this.descripcion = descripcion;
     }
 
-    public String getTotalDocumento() {
+    public Double getTotalDocumento() {
         return totalDocumento;
     }
 
-    public void setTotalDocumento(String totalDocumento) {
+    public void setTotalDocumento(Double totalDocumento) {
         this.totalDocumento = totalDocumento;
+    }
+    
+    @Override
+    public String toString() {
+        return getNumeroDocumento() + " | " +
+                getFechaDocumento() + " | " +
+                getDescripcion();
     }
 }

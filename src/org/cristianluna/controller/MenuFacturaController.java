@@ -350,7 +350,7 @@ public class MenuFacturaController implements Initializable{
             procedimiento.setDouble(3, registro.getTotalFactura());
             procedimiento.setDate(4, fechaFactura);
             procedimiento.setInt(5, registro.getCodigoCliente());
-            procedimiento.setInt(6, registro.getNumeroFactura());
+            procedimiento.setInt(6, registro.getCodigoEmpleado());
             procedimiento.execute();
         }catch(Exception e){
             e.printStackTrace();

@@ -158,7 +158,7 @@ public class Principal extends Application {
     
     public void menuDetalleCompraV(){
         try{
-            MenuDetalleCompraController menuDetalleCompraView = (MenuDetalleCompraController)cambiarEscena("MenuDetalleCompraView.fxml", 819, 459);
+            MenuDetalleCompraController menuDetalleCompraView = (MenuDetalleCompraController)cambiarEscena("MenuDetalleCompraView.fxml", 797, 449);
             menuDetalleCompraView.setEscenarioPrincipal(this);
         } catch(Exception e){
             e.printStackTrace();

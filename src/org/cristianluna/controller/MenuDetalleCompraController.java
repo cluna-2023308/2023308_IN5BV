@@ -17,6 +17,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javax.swing.JOptionPane;
 import org.cristianluna.bean.Compras;
 import org.cristianluna.bean.DetalleCompra;
 import org.cristianluna.bean.Productos;
@@ -35,6 +38,8 @@ public class MenuDetalleCompraController implements Initializable{
     private ObservableList <DetalleCompra> listaDetalleC;
     private ObservableList <Productos> listaProductos;
     private ObservableList <Compras> listaCompras;
+    private enum operaciones{AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NINGUNO}
+    private operaciones tipoDeOperacion = operaciones.NINGUNO;
     @FXML private Button btnRegresarC;
     @FXML private TableView tblDetalleC;
     @FXML private TableColumn colCodDetalleC;
@@ -47,6 +52,14 @@ public class MenuDetalleCompraController implements Initializable{
     @FXML private TextField txtCantidad;
     @FXML private ComboBox cmbCodigoProd;
     @FXML private ComboBox cmbCodigoNumDoc;
+    @FXML private Button btnAgregar;
+    @FXML private Button btnEditar;
+    @FXML private Button btnEliminar;
+    @FXML private Button btnReportes;
+    @FXML private ImageView imgAgregar;
+    @FXML private ImageView imgEliminar;
+    @FXML private ImageView imgEditar;
+    @FXML private ImageView imgReportes;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,6 +82,7 @@ public class MenuDetalleCompraController implements Initializable{
        txtCostoU.setText(String.valueOf(((DetalleCompra)tblDetalleC.getSelectionModel().getSelectedItem()).getCostoUnitario()));
        txtCantidad.setText(String.valueOf(((DetalleCompra)tblDetalleC.getSelectionModel().getSelectedItem()).getCantidad())); 
        cmbCodigoProd.getSelectionModel().select(buscarProductos(((DetalleCompra)tblDetalleC.getSelectionModel().getSelectedItem()).getCodigoProducto()));
+       cmbCodigoNumDoc.getSelectionModel().select(buscarCompras(((DetalleCompra)tblDetalleC.getSelectionModel().getSelectedItem()).getNumeroDocumento()));
     }
     
     public Productos buscarProductos (int codigoProducto ){
@@ -95,7 +109,7 @@ public class MenuDetalleCompraController implements Initializable{
         return resultado;
     }
     
-    /*public Compras buscarCompras (int numeroDocumento ){
+    public Compras buscarCompras (int numeroDocumento ){
         Compras resultado = null;
         try{
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_BuscarCompras(?)}");
@@ -104,17 +118,17 @@ public class MenuDetalleCompraController implements Initializable{
             while (registro.next()) {
                 java.sql.Date fecha = registro.getDate("fechaDocumento");
                 LocalDate fechaDoc = fecha.toLocalDate();
-                resultado = new Compras(registro.setInt("numeroDocumento"),
+                resultado = new Compras(registro.getInt("numeroDocumento"),
                                         fechaDoc,
                                         registro.getString("descripcion"),
-                                        registro.getString("totalDocumento")
+                                        registro.getDouble("totalDocumento")
                 );
             }
         }catch (Exception e){
             e.printStackTrace();
         }    
         return resultado;
-    }*/
+    }
     
     public ObservableList<DetalleCompra> getDetalleCompra(){
         ArrayList<DetalleCompra> lista = new ArrayList<DetalleCompra>();
@@ -138,7 +152,7 @@ public class MenuDetalleCompraController implements Initializable{
     public ObservableList<Productos> getProductos() {
         ArrayList<Productos> listaPro = new ArrayList<>();
         try {
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarProveedores()}");
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarProductos()}");
             ResultSet resultado = procedimiento.executeQuery();
             while (resultado.next()) {
                 listaPro.add(new Productos(resultado.getInt("codigoProducto"),
@@ -166,11 +180,11 @@ public class MenuDetalleCompraController implements Initializable{
             while (resultado.next()) {
                java.sql.Date fecha = resultado.getDate("fechaDocumento");
                 LocalDate fechaDoc = fecha.toLocalDate();
-                resultado = (ResultSet) new Compras(resultado.getInt("numeroDocumento"),
+                listaCom.add(new Compras(resultado.getInt("numeroDocumento"),
                                         fechaDoc,
                                         resultado.getString("descripcion"),
-                                        resultado.getString("totalDocumento")
-                );
+                                        resultado.getDouble("totalDocumento")
+                ));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -178,6 +192,180 @@ public class MenuDetalleCompraController implements Initializable{
         return listaCompras = FXCollections.observableList(listaCom);
     }
     
+    public void agregar (){
+        switch(tipoDeOperacion){
+            case NINGUNO:
+                activarControles();
+                btnAgregar.setText("Guardar");
+                btnEliminar.setText("Cancelar");
+                btnEditar.setDisable(true);
+                btnReportes.setDisable(true);
+                imgAgregar.setImage(new Image("org/cristianluna/images/Guardar.png"));
+                imgEliminar.setImage(new Image("org/cristianluna/images/Eliminar.png"));
+                tipoDeOperacion = operaciones.ACTUALIZAR;
+                break;
+            case ACTUALIZAR:
+                guardar ();
+                desactivarControles();
+                limpiarControles ();
+                btnAgregar.setText("Agregar");
+                btnEliminar.setText("Eliminar");
+                btnEditar.setDisable(false);
+                btnReportes.setDisable(false);
+                imgAgregar.setImage(new Image("org/cristianluna/images/IconAgregarCliente.png"));
+                imgEliminar.setImage(new Image("org/cristianluna/images/IconEliminarCliente.png"));
+                tipoDeOperacion = operaciones.NINGUNO;
+                cargaDatos();
+                break;
+         }
+     }
+     
+    public void guardar (){
+         DetalleCompra registro = new DetalleCompra();
+         registro.setCodigoDetalleCompra(Integer.parseInt(txtCodigoDetalleC.getText()));
+         registro.setCodigoProducto(((Productos)cmbCodigoProd.getSelectionModel().getSelectedItem()).getCodigoProveedor());
+         registro.setNumeroDocumento(((Compras)cmbCodigoNumDoc.getSelectionModel().getSelectedItem()).getNumeroDocumento());
+         registro.setCostoUnitario(Double.parseDouble(txtCostoU.getText()));
+         registro.setCantidad(Integer.parseInt(txtCantidad.getText()));
+         try {
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall
+            ("{call sp_agregarDetalleCompra(?, ?, ?, ?, ?)}");
+                procedimiento.setInt(1, registro.getCodigoDetalleCompra());
+                procedimiento.setDouble(2, registro.getCostoUnitario());
+                procedimiento.setInt(3, registro.getCantidad());
+                procedimiento.setInt(4, registro.getCodigoProducto());
+                procedimiento.setInt(5, registro.getNumeroDocumento());
+                procedimiento.execute();
+            listaDetalleC.add(registro);
+         }catch (Exception e){
+             e.printStackTrace();
+         }
+     }
+    
+    public void eliminar (){
+        switch(tipoDeOperacion){
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnAgregar.setText("Agregar");
+                btnEliminar.setText("Eliminar");
+                btnEditar.setDisable(false);
+                btnReportes.setDisable(false);
+                imgAgregar.setImage(new Image("org/cristianluna/images/IconAgregarCliente.png"));
+                imgEliminar.setImage(new Image("org/cristianluna/images/IconEliminarCliente.png"));
+                tipoDeOperacion = operaciones.NINGUNO;
+                break;
+            default:
+                if(tblDetalleC.getSelectionModel().getSelectedItem() != null){
+                    int respuesta = JOptionPane.showConfirmDialog(null, "Confrimar si elimina el registro", "Eliminar Detalle Compra", 
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(respuesta == JOptionPane.YES_NO_OPTION){
+                        try{
+                            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EliminarDetalleCompra(?)}");
+                            procedimiento.setInt(1, ((DetalleCompra)tblDetalleC.getSelectionModel().getSelectedItem()).getCodigoDetalleCompra());
+                            procedimiento.execute();
+                            listaDetalleC.remove(tblDetalleC.getSelectionModel().getSelectedItem());
+                            limpiarControles();
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }else 
+                    JOptionPane.showMessageDialog(null, "Debe de seleccionar un Elemento");
+        }
+    }
+    
+    public void editar(){
+        switch(tipoDeOperacion){
+            case NINGUNO:
+                if(tblDetalleC.getSelectionModel().getSelectedItem()!= null){
+                    btnEditar.setText("Actualizar");
+                    btnReportes.setText("Cancelar");
+                    btnAgregar.setDisable(true);
+                    btnEliminar.setDisable(true);
+                    activarControles();
+                    imgEditar.setImage(new Image("org/cristianluna/images/Guardar.png"));
+                    imgReportes.setImage(new Image("org/cristianluna/images/Eliminar.png"));                    
+                    txtCodigoDetalleC.setEditable(false);
+                    cmbCodigoProd.setDisable(true);
+                    cmbCodigoNumDoc.setDisable(true);
+                    tipoDeOperacion = operaciones.ACTUALIZAR;
+                }else
+                    JOptionPane.showMessageDialog(null, "Debe de seleccionar algun Elemento");
+                break;
+            case ACTUALIZAR:
+                actualizar();
+                btnEditar.setText("Editar");
+                btnReportes.setText("Reportes");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("org/cristianluna/images/IconEditarCliente.png"));
+                imgReportes.setImage(new Image("org/cristianluna/images/IconReportesCliente.png"));
+                desactivarControles();
+                tipoDeOperacion = operaciones.NINGUNO;
+                cargaDatos();
+                limpiarControles();
+                break;
+        }
+    }
+    
+    public void reporte() {
+        switch (tipoDeOperacion){
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnEditar.setText("Editar");
+                btnReportes.setText("Reporte");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("org/cristianluna/images/IconEditarCliente.png"));
+                imgReportes.setImage(new Image("org/cristianluna/images/IconReportesCliente.png"));
+                tipoDeOperacion = operaciones.NINGUNO;
+                break;
+        }
+    }
+    
+    public void actualizar (){
+        try{
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EditarDetalleCompra(?, ?, ?, ?, ?)}");
+            DetalleCompra registro = (DetalleCompra)tblDetalleC.getSelectionModel().getSelectedItem();
+            registro.setCostoUnitario(Double.parseDouble(txtCostoU.getText()));
+            registro.setCantidad(Integer.parseInt(txtCantidad.getText()));
+            procedimiento.setInt(1, registro.getCodigoDetalleCompra());
+            procedimiento.setDouble(2, registro.getCostoUnitario());
+            procedimiento.setInt(3, registro.getCantidad());
+            procedimiento.setInt(4, registro.getCodigoProducto());
+            procedimiento.setInt(5, registro.getNumeroDocumento());
+            procedimiento.execute();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void desactivarControles(){
+        txtCodigoDetalleC.setEditable(false);
+        txtCostoU.setEditable(false);
+        txtCantidad.setEditable(false);
+        cmbCodigoProd.setDisable(true);
+        cmbCodigoNumDoc.setDisable(true);
+    }
+    
+    public void activarControles(){
+        txtCodigoDetalleC.setEditable(true);
+        txtCostoU.setEditable(true);
+        txtCantidad.setEditable(true);
+        cmbCodigoProd.setDisable(false);
+        cmbCodigoNumDoc.setDisable(false);
+    }
+    
+    public void limpiarControles(){
+        txtCodigoDetalleC.clear();
+        txtCostoU.clear();
+        txtCantidad.clear();
+        tblDetalleC.getSelectionModel().getSelectedItem();
+        cmbCodigoProd.getSelectionModel().getSelectedItem();
+        cmbCodigoNumDoc.getSelectionModel().getSelectedItem();
+    }
 
     public Principal getEscenarioPrincipal() {
         return escenarioPrincipal;
