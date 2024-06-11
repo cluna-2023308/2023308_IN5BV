@@ -4,6 +4,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +23,7 @@ import javax.swing.JOptionPane;
 import org.cristianluna.system.Principal;
 import org.cristianluna.bean.Clientes;
 import org.cristianluna.db.Conexion;
+import org.cristianluna.report.GenerarReportes;
 
 
 public class MenuClientesController implements Initializable {
@@ -228,6 +231,9 @@ public class MenuClientesController implements Initializable {
     
     public void reporte() {
         switch (tipoDeOperaciones){
+            case NINGUNO:
+                imprimirReporte();
+                break;
             case ACTUALIZAR:
                 desactivarControles();
                 limpiarControles();
@@ -240,6 +246,12 @@ public class MenuClientesController implements Initializable {
                 tipoDeOperaciones = operaciones.NINGUNO;
                 break;
         }
+    }
+    
+    public void imprimirReporte(){
+        Map parametros = new HashMap();
+        parametros.put("codigoCliente", null);
+        GenerarReportes.mostrarReportes("reportClientes.jasper", "Reporte de los clientes", parametros);
     }
     
     public void actualizar (){
