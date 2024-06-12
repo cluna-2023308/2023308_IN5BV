@@ -265,11 +265,11 @@ public class MenuClientesController implements Initializable {
             registro.setTelefonoCliente(txtTelefonoC.getText());
             registro.setCorreoCliente(txtCorreoC.getText());
             procedimiento.setInt(1, registro.getCodigoCliente());
-            procedimiento.setString(2, registro.getNombreCliente());
-            procedimiento.setString(3, registro.getApellidoCliente());
-            procedimiento.setString(4, registro.getNITCliente());
-            procedimiento.setString(5, registro.getTelefonoCliente());
-            procedimiento.setString(6, registro.getDireccionCliente());
+            procedimiento.setString(2, registro.getNITCliente());
+            procedimiento.setString(3, registro.getNombreCliente());
+            procedimiento.setString(4, registro.getApellidoCliente());
+            procedimiento.setString(5, registro.getDireccionCliente());
+            procedimiento.setString(6, registro.getTelefonoCliente());
             procedimiento.setString(7, registro.getCorreoCliente());
             procedimiento.execute();
         }catch(Exception e){

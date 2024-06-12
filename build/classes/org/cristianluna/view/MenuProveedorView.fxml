@@ -125,7 +125,7 @@
             <Label text="Apellido" GridPane.columnIndex="5" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <TableView fx:id="tblProveedores" layoutX="225.0" layoutY="196.0" onMouseClicked="#seleccionarElemento" prefHeight="334.0" prefWidth="601.0">
+      <TableView fx:id="tblProveedores" layoutX="225.0" layoutY="196.0" onMouseClicked="#seleccionarElemento" onSort="#reporte" prefHeight="334.0" prefWidth="601.0">
         <columns>
           <TableColumn fx:id="colCodigoP" prefWidth="75.0" text="codigoProveedor" />
           <TableColumn fx:id="colNITP" prefWidth="75.0" text="NITproveedor" />
@@ -133,7 +133,7 @@
             <TableColumn fx:id="colApellidoP" prefWidth="75.0" text="apellidoProveedor" />
             <TableColumn fx:id="colDireccionP" prefWidth="75.0" text="direccionProveedor" />
             <TableColumn fx:id="colRazonSocialP" prefWidth="75.0" text="razonSocial" />
-            <TableColumn fx:id="colContactoP" prefWidth="75.0" text="contactoPrincipal" />
+            <TableColumn fx:id="colContactoP" onEditStart="#reporte" prefWidth="75.0" text="contactoPrincipal" />
             <TableColumn fx:id="colPaginaWebP" prefWidth="75.0" text="paginaWeb" />
         </columns>
       </TableView>

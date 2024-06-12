@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportClientes" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0cb064d5-002e-46c7-93a0-8d2cf4304dec">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="192"/>
 	<queryString>
 		<![CDATA[call sp_ListarClientes]]>
 	</queryString>
@@ -63,13 +63,13 @@
 				<reportElement x="291" y="0" width="100" height="20" uuid="f8dc446c-8128-454e-9e3b-0357714e1cd7"/>
 				<text><![CDATA[apellidoCliente]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="429" y="0" width="100" height="20" uuid="c34c407d-48e9-43c6-807e-48e840bbbca4"/>
-				<text><![CDATA[direccionCliente]]></text>
-			</staticText>
 			<line>
 				<reportElement x="0" y="31" width="555" height="1" forecolor="#663300" uuid="54ede328-9467-4876-bc7c-9b3427793e4d"/>
 			</line>
+			<staticText>
+				<reportElement x="441" y="0" width="100" height="20" uuid="1cff41f0-730c-4b9b-a370-3874bcbfc7d2"/>
+				<text><![CDATA[telefonoCliente]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -86,13 +86,13 @@
 				<reportElement x="291" y="19" width="100" height="20" uuid="1f076306-0a74-4cc7-a9bb-c59793f4d850"/>
 				<textFieldExpression><![CDATA[$F{apellidoCliente}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="429" y="19" width="100" height="20" uuid="54938e9d-75ba-49c7-b7dd-c8e413b0db7b"/>
-				<textFieldExpression><![CDATA[$F{direccionCliente}]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement x="0" y="39" width="555" height="1" forecolor="#663300" uuid="ade0e195-5b46-44a4-9700-49055e75c3ee"/>
 			</line>
+			<textField>
+				<reportElement x="441" y="19" width="100" height="20" uuid="93296015-4b6c-4c7e-9fe9-72fbb6ee0e13"/>
+				<textFieldExpression><![CDATA[$F{telefonoCliente}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
