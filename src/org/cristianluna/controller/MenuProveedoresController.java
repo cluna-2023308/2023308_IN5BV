@@ -121,8 +121,8 @@ public class MenuProveedoresController implements Initializable{
     public void agregar(){
         switch(tipoDeOperaciones){
             case NINGUNO:
-                limpiarControles();
                 activarControles();
+                limpiarControles();
                 btnAgregarProveedor.setText("Guardar");
                 btnEliminarProveedor.setText("Cancelar");
                 btnEditarProveedor.setDisable(true);
@@ -142,6 +142,7 @@ public class MenuProveedoresController implements Initializable{
                 imgAgregar.setImage(new Image("org/cristianluna/images/IconAgregarCliente.png"));
                 imgEliminar.setImage(new Image("org/cristianluna/images/IconEliminarCliente.png"));
                 tipoDeOperaciones = operaciones.NINGUNO;
+                cargarDatos();
                 break;
         }
     }
