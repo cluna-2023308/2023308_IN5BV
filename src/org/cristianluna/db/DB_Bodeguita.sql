@@ -1096,3 +1096,7 @@ select * from detallefactura
     join clientes on factura.codigoCliente = clientes.codigoCliente
     join productos on detallefactura.codigoProducto = productos.codigoProducto
     where factura.numeroFactura = 1;
+    
+select * from empleados
+	join cargoempleado on empleados.codigoCargoEmpleado = cargoempleado.codigoCargoEmpleado
+    
