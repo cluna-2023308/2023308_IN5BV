@@ -692,7 +692,7 @@ Delimiter ;
 
 call sp_agregarProductos(01, 'Es una pizza mediana', 40.00, 30.50, 20.30, 'PizzaMediana.png', 20, 01, 01);
 call sp_agregarProductos(02, 'Es un detergente', 45.00, 32.50, 25.30, 'Detergente.png', 35, 03, 03);
-call sp_agregarProductos(03, 'Es un lapiz', '15.99', 10.99, 6.99, 'Lapiz.png', '100', 04, 04);
+call sp_agregarProductos(03, 'Es un lapiz', '15.99', 10.99, 6.99, 'Lapiz.png', '100', 03, 03);
 
 -- --------------------------- Listar Productos -------------------------------
 Delimiter $$
@@ -1091,47 +1091,8 @@ delimiter ;
 call sp_EditarDetalleFactura(01, 34.89, 6, 01, 01);
 call sp_ListarDetalleFactura();
 
-/*-- funcion sobre el precio unitario
-delimiter $$
-	create function fn_TraerPrecioUnitario(codProd varchar(15)) returns decimal(10, 2)
-	deterministic
-	begin
-		declare precio decimal(10, 2);
-		set precio = (select detallecompra.costoUnitario from detallecompra
-			where detallecompra.codigoProducto-codPro);
-			return precio;
-	end $$
-delimiter ;
-
--- total compra
-delimiter $$
-	create function fn_TotalCompra(numeroDocumento int) returns decimal(10,2)
-    deterministic
-    begin
-		declare sumatoria decimal(10, 2);
-        
-        set sumatoria = (select sum(cantidad*costoUnitario) from detallecompra
-			where numeroDocumento = numeroDocumento);
-			return sumatoria;
-	end $$
-
--- Precio Detalle Factura
-delimiter $$
-	create trigger tr_insertarPrecioDetalleFactura_Before_Insert
-    before insert on detallefactura
-    for each row
-		begin
-			declare total decimal(10,2);
-           set new.precioUnitario = (select precioUnitario from productos
-									where productos.codigoProducto-new.codigoProducto); 
-    end $$
-delimiter ;*/
-
--- Insertar precios en Productos
-/*delimiter $$
-	create trigger tr_insertarPreciosProductos_after_insert
-    after insert on detallecompra
-    for each row
-		begin
-        call sp_EditarProductos(new.codigoProductos,
-								)*/
+select * from detallefactura
+	join factura on detallefactura.numeroFactura = factura.numeroFactura
+    join clientes on factura.codigoCliente = clientes.codigoCliente
+    join productos on detallefactura.codigoProducto = productos.codigoProducto
+    where factura.numeroFactura = 1;

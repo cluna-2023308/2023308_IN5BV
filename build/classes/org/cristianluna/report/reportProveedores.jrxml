@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportProveedores" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fac3bd43-2bc8-47a6-bcbd-8c82387c93ee">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="39"/>
+	<property name="ireport.y" value="201"/>
 	<queryString>
 		<![CDATA[call sp_ListarProveedores]]>
 	</queryString>
@@ -33,8 +33,8 @@
 	<background>
 		<band height="802" splitType="Stretch">
 			<image scaleImage="FillFrame">
-				<reportElement x="0" y="0" width="555" height="802" uuid="feef76e0-94f0-4854-b3e4-a4b5bcd1c61c"/>
-				<imageExpression><![CDATA["C:\\Users\\alfre\\OneDrive\\Escritorio\\Repositorio_2023308\\2023308_IN5BV\\src\\org\\cristianluna\\images\\FondoReportesProveedor.png"]]></imageExpression>
+				<reportElement x="0" y="0" width="555" height="802" uuid="e15fded7-83ff-46e8-8c62-149a05010566"/>
+				<imageExpression><![CDATA["C:\\Users\\alfre\\OneDrive\\Escritorio\\Repositorio_2023308\\2023308_IN5BV\\src\\org\\cristianluna\\images\\FondoReportesProveedores.png"]]></imageExpression>
 			</image>
 		</band>
 	</background>
@@ -42,33 +42,25 @@
 		<band height="79" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="118" splitType="Stretch">
-			<staticText>
-				<reportElement x="216" y="85" width="126" height="33" forecolor="#006600" uuid="773f8ec0-9876-46a4-beb2-4da6a852cf61"/>
-				<textElement>
-					<font fontName="Dubai Medium" size="18"/>
-				</textElement>
-				<text><![CDATA[PROVEEDORES]]></text>
-			</staticText>
-		</band>
+		<band height="118" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band height="74" splitType="Stretch">
 			<staticText>
 				<reportElement x="13" y="22" width="100" height="20" uuid="9516cb84-1b1a-4cbc-8ca8-cfd2c4545465"/>
-				<text><![CDATA[NITproveedor]]></text>
+				<text><![CDATA[NIT Proveedor]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="155" y="22" width="100" height="20" uuid="286762e2-93db-46ab-8291-fcb9df880a65"/>
-				<text><![CDATA[nombreProveedor]]></text>
+				<text><![CDATA[Nombre Proveedor]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="306" y="22" width="100" height="20" uuid="2ed8f6ee-1e6e-4c34-8fb9-ba35ccc0c9e3"/>
-				<text><![CDATA[apellidoProveedor]]></text>
+				<text><![CDATA[Apellido Proveedor]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="440" y="22" width="100" height="20" uuid="35645f37-c3d2-4d33-9255-a7e845b4b243"/>
-				<text><![CDATA[contactoPrincipal]]></text>
+				<text><![CDATA[Contacto Principal]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="55" width="555" height="1" forecolor="#006600" uuid="049b0be4-2f33-4a00-8d5f-393fd0f5303b"/>

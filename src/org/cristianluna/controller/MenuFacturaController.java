@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +29,7 @@ import org.cristianluna.bean.Clientes;
 import org.cristianluna.bean.Empleados;
 import org.cristianluna.bean.Factura;
 import org.cristianluna.db.Conexion;
+import org.cristianluna.report.GenerarReportes;
 import org.cristianluna.system.Principal;
 
 public class MenuFacturaController implements Initializable{
@@ -323,6 +326,9 @@ public class MenuFacturaController implements Initializable{
     
     public void reporte() {
         switch (tipoDeOperacion){
+            case NINGUNO:
+                imprimirReporte();
+                break;
             case ACTUALIZAR:
                 desactivarControles();
                 limpiarControles();
@@ -335,6 +341,13 @@ public class MenuFacturaController implements Initializable{
                 tipoDeOperacion = operaciones.NINGUNO;
                 break;
         }
+    }
+    
+    public void imprimirReporte(){
+        Map parametros = new HashMap();
+        int factID = ((Factura)tblFactura.getSelectionModel().getSelectedItem()).getNumeroFactura();
+        parametros.put("factID", factID);
+        GenerarReportes.mostrarReportes("reportFactura.jasper", "Reporte de factura", parametros);
     }
     
     public void actualizar (){

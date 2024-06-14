@@ -692,7 +692,7 @@ Delimiter ;
 
 call sp_agregarProductos(01, 'Es una pizza mediana', 40.00, 30.50, 20.30, 'PizzaMediana.png', 20, 01, 01);
 call sp_agregarProductos(02, 'Es un detergente', 45.00, 32.50, 25.30, 'Detergente.png', 35, 03, 03);
-call sp_agregarProductos(03, 'Es un lapiz', '15.99', 10.99, 6.99, 'Lapiz.png', '100', 04, 04);
+call sp_agregarProductos(03, 'Es un lapiz', '15.99', 10.99, 6.99, 'Lapiz.png', '100', 03, 03);
 
 -- --------------------------- Listar Productos -------------------------------
 Delimiter $$
